@@ -1,0 +1,34 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/mdomenighini/fresh/src/cvmfs_cache_xrd.cc
+alloca.h
+-
+inttypes.h
+-
+stdint.h
+-
+unistd.h
+-
+cassert
+-
+cstdio
+-
+cstring
+-
+ctime
+-
+map
+-
+string
+-
+vector
+-
+libcvmfs_cache.h
+/home/mdomenighini/fresh/src/libcvmfs_cache.h
+
