@@ -4,7 +4,7 @@ SET(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 SET(CMAKE_DEPENDS_CHECK_CXX
-  "/home/mdomenighini/fresh/src/cvmfs_cache_xrd.cc" "/home/mdomenighini/fresh/build/src/CMakeFiles/cvmfs_cache_xrd.dir/cvmfs_cache_xrd.cc.o"
+  "/home/mdomenighini/plugin_module/src/cvmfs_cache_xrd.cc" "/home/mdomenighini/plugin_module/build/src/CMakeFiles/cvmfs_cache_xrd.dir/cvmfs_cache_xrd.cc.o"
   )
 SET(CMAKE_CXX_COMPILER_ID "GNU")
 

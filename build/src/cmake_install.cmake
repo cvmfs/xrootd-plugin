@@ -1,4 +1,4 @@
-# Install script for directory: /home/mdomenighini/fresh/src
+# Install script for directory: /home/mdomenighini/plugin_module/src
 
 # Set the install prefix
 IF(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -39,7 +39,7 @@ IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspeci
          FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/libexec/cvmfs/cache/cvmfs_cache_xrd"
          RPATH "")
   ENDIF()
-  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/libexec/cvmfs/cache" TYPE EXECUTABLE FILES "/home/mdomenighini/fresh/build/src/cvmfs_cache_xrd")
+  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/libexec/cvmfs/cache" TYPE EXECUTABLE FILES "/home/mdomenighini/plugin_module/build/src/cvmfs_cache_xrd")
   IF(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/libexec/cvmfs/cache/cvmfs_cache_xrd" AND
      NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/libexec/cvmfs/cache/cvmfs_cache_xrd")
     IF(CMAKE_INSTALL_DO_STRIP)

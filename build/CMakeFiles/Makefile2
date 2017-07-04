@@ -50,10 +50,10 @@ EQUALS = =
 CMAKE_EDIT_COMMAND = /usr/bin/ccmake
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/mdomenighini/fresh
+CMAKE_SOURCE_DIR = /home/mdomenighini/plugin_module
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/mdomenighini/fresh/build
+CMAKE_BINARY_DIR = /home/mdomenighini/plugin_module/build
 
 #=============================================================================
 # Directory level rules for directory src
@@ -77,7 +77,7 @@ src/preinstall:
 src/CMakeFiles/cvmfs_cache_xrd.dir/all:
 	$(MAKE) -f src/CMakeFiles/cvmfs_cache_xrd.dir/build.make src/CMakeFiles/cvmfs_cache_xrd.dir/depend
 	$(MAKE) -f src/CMakeFiles/cvmfs_cache_xrd.dir/build.make src/CMakeFiles/cvmfs_cache_xrd.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/mdomenighini/fresh/build/CMakeFiles  1
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/mdomenighini/plugin_module/build/CMakeFiles  1
 	@echo "Built target cvmfs_cache_xrd"
 .PHONY : src/CMakeFiles/cvmfs_cache_xrd.dir/all
 
@@ -87,9 +87,9 @@ all: src/CMakeFiles/cvmfs_cache_xrd.dir/all
 
 # Build rule for subdir invocation for target.
 src/CMakeFiles/cvmfs_cache_xrd.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/mdomenighini/fresh/build/CMakeFiles 1
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/mdomenighini/plugin_module/build/CMakeFiles 1
 	$(MAKE) -f CMakeFiles/Makefile2 src/CMakeFiles/cvmfs_cache_xrd.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/mdomenighini/fresh/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/mdomenighini/plugin_module/build/CMakeFiles 0
 .PHONY : src/CMakeFiles/cvmfs_cache_xrd.dir/rule
 
 # Convenience name for target.

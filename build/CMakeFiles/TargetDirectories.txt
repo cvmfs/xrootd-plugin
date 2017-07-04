@@ -1,1 +1,1 @@
-/home/mdomenighini/fresh/build/src/CMakeFiles/cvmfs_cache_xrd.dir
+/home/mdomenighini/plugin_module/build/src/CMakeFiles/cvmfs_cache_xrd.dir

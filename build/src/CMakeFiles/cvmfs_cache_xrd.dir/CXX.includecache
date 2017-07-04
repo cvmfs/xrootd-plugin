@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/mdomenighini/fresh/src/cvmfs_cache_xrd.cc
+/home/mdomenighini/plugin_module/src/cvmfs_cache_xrd.cc
 alloca.h
 -
 inttypes.h
@@ -15,7 +15,15 @@ stdint.h
 -
 unistd.h
 -
+fcntl.h
+-
+errno.h
+-
 cassert
+-
+stdio.h
+-
+stdlib.h
 -
 cstdio
 -
@@ -29,6 +37,12 @@ string
 -
 vector
 -
+sys/types.h
+-
+sys/stat.h
+-
 libcvmfs_cache.h
-/home/mdomenighini/fresh/src/libcvmfs_cache.h
+/home/mdomenighini/plugin_module/src/libcvmfs_cache.h
+XrdPosix/XrdPosix.hh
+/home/mdomenighini/plugin_module/src/XrdPosix/XrdPosix.hh
 

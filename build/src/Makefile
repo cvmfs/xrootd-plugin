@@ -42,10 +42,10 @@ EQUALS = =
 CMAKE_EDIT_COMMAND = /usr/bin/ccmake
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/mdomenighini/fresh
+CMAKE_SOURCE_DIR = /home/mdomenighini/plugin_module
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/mdomenighini/fresh/build
+CMAKE_BINARY_DIR = /home/mdomenighini/plugin_module/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -113,14 +113,14 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/mdomenighini/fresh/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/mdomenighini/fresh/build/CMakeFiles /home/mdomenighini/fresh/build/src/CMakeFiles/progress.marks
-	cd /home/mdomenighini/fresh/build && $(MAKE) -f CMakeFiles/Makefile2 src/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/mdomenighini/fresh/build/CMakeFiles 0
+	cd /home/mdomenighini/plugin_module/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/mdomenighini/plugin_module/build/CMakeFiles /home/mdomenighini/plugin_module/build/src/CMakeFiles/progress.marks
+	cd /home/mdomenighini/plugin_module/build && $(MAKE) -f CMakeFiles/Makefile2 src/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/mdomenighini/plugin_module/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/mdomenighini/fresh/build && $(MAKE) -f CMakeFiles/Makefile2 src/clean
+	cd /home/mdomenighini/plugin_module/build && $(MAKE) -f CMakeFiles/Makefile2 src/clean
 .PHONY : clean
 
 # The main clean target
@@ -129,22 +129,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/mdomenighini/fresh/build && $(MAKE) -f CMakeFiles/Makefile2 src/preinstall
+	cd /home/mdomenighini/plugin_module/build && $(MAKE) -f CMakeFiles/Makefile2 src/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/mdomenighini/fresh/build && $(MAKE) -f CMakeFiles/Makefile2 src/preinstall
+	cd /home/mdomenighini/plugin_module/build && $(MAKE) -f CMakeFiles/Makefile2 src/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/mdomenighini/fresh/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/mdomenighini/plugin_module/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 src/CMakeFiles/cvmfs_cache_xrd.dir/rule:
-	cd /home/mdomenighini/fresh/build && $(MAKE) -f CMakeFiles/Makefile2 src/CMakeFiles/cvmfs_cache_xrd.dir/rule
+	cd /home/mdomenighini/plugin_module/build && $(MAKE) -f CMakeFiles/Makefile2 src/CMakeFiles/cvmfs_cache_xrd.dir/rule
 .PHONY : src/CMakeFiles/cvmfs_cache_xrd.dir/rule
 
 # Convenience name for target.
@@ -153,7 +153,7 @@ cvmfs_cache_xrd: src/CMakeFiles/cvmfs_cache_xrd.dir/rule
 
 # fast build rule for target.
 cvmfs_cache_xrd/fast:
-	cd /home/mdomenighini/fresh/build && $(MAKE) -f src/CMakeFiles/cvmfs_cache_xrd.dir/build.make src/CMakeFiles/cvmfs_cache_xrd.dir/build
+	cd /home/mdomenighini/plugin_module/build && $(MAKE) -f src/CMakeFiles/cvmfs_cache_xrd.dir/build.make src/CMakeFiles/cvmfs_cache_xrd.dir/build
 .PHONY : cvmfs_cache_xrd/fast
 
 cvmfs_cache_xrd.o: cvmfs_cache_xrd.cc.o
@@ -161,7 +161,7 @@ cvmfs_cache_xrd.o: cvmfs_cache_xrd.cc.o
 
 # target to build an object file
 cvmfs_cache_xrd.cc.o:
-	cd /home/mdomenighini/fresh/build && $(MAKE) -f src/CMakeFiles/cvmfs_cache_xrd.dir/build.make src/CMakeFiles/cvmfs_cache_xrd.dir/cvmfs_cache_xrd.cc.o
+	cd /home/mdomenighini/plugin_module/build && $(MAKE) -f src/CMakeFiles/cvmfs_cache_xrd.dir/build.make src/CMakeFiles/cvmfs_cache_xrd.dir/cvmfs_cache_xrd.cc.o
 .PHONY : cvmfs_cache_xrd.cc.o
 
 cvmfs_cache_xrd.i: cvmfs_cache_xrd.cc.i
@@ -169,7 +169,7 @@ cvmfs_cache_xrd.i: cvmfs_cache_xrd.cc.i
 
 # target to preprocess a source file
 cvmfs_cache_xrd.cc.i:
-	cd /home/mdomenighini/fresh/build && $(MAKE) -f src/CMakeFiles/cvmfs_cache_xrd.dir/build.make src/CMakeFiles/cvmfs_cache_xrd.dir/cvmfs_cache_xrd.cc.i
+	cd /home/mdomenighini/plugin_module/build && $(MAKE) -f src/CMakeFiles/cvmfs_cache_xrd.dir/build.make src/CMakeFiles/cvmfs_cache_xrd.dir/cvmfs_cache_xrd.cc.i
 .PHONY : cvmfs_cache_xrd.cc.i
 
 cvmfs_cache_xrd.s: cvmfs_cache_xrd.cc.s
@@ -177,7 +177,7 @@ cvmfs_cache_xrd.s: cvmfs_cache_xrd.cc.s
 
 # target to generate assembly for a file
 cvmfs_cache_xrd.cc.s:
-	cd /home/mdomenighini/fresh/build && $(MAKE) -f src/CMakeFiles/cvmfs_cache_xrd.dir/build.make src/CMakeFiles/cvmfs_cache_xrd.dir/cvmfs_cache_xrd.cc.s
+	cd /home/mdomenighini/plugin_module/build && $(MAKE) -f src/CMakeFiles/cvmfs_cache_xrd.dir/build.make src/CMakeFiles/cvmfs_cache_xrd.dir/cvmfs_cache_xrd.cc.s
 .PHONY : cvmfs_cache_xrd.cc.s
 
 # Help Target
@@ -207,6 +207,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/mdomenighini/fresh/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/mdomenighini/plugin_module/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 
