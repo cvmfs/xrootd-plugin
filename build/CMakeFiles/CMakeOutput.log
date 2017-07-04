@@ -28,30 +28,30 @@ The CXX compiler identification is GNU, found in "/home/mdomenighini/plugin_modu
 Determining if the C compiler works passed with the following output:
 Change Dir: /home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp
 
-Run Build Command:/usr/bin/gmake "cmTryCompileExec2038440696/fast"
-/usr/bin/gmake -f CMakeFiles/cmTryCompileExec2038440696.dir/build.make CMakeFiles/cmTryCompileExec2038440696.dir/build
+Run Build Command:/usr/bin/gmake "cmTryCompileExec4153660490/fast"
+/usr/bin/gmake -f CMakeFiles/cmTryCompileExec4153660490.dir/build.make CMakeFiles/cmTryCompileExec4153660490.dir/build
 gmake[1]: Entering directory `/home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp'
 /usr/bin/cmake -E cmake_progress_report /home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp/CMakeFiles 1
-Building C object CMakeFiles/cmTryCompileExec2038440696.dir/testCCompiler.c.o
-/usr/bin/cc    -o CMakeFiles/cmTryCompileExec2038440696.dir/testCCompiler.c.o   -c /home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp/testCCompiler.c
-Linking C executable cmTryCompileExec2038440696
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec2038440696.dir/link.txt --verbose=1
-/usr/bin/cc       CMakeFiles/cmTryCompileExec2038440696.dir/testCCompiler.c.o  -o cmTryCompileExec2038440696 -rdynamic 
+Building C object CMakeFiles/cmTryCompileExec4153660490.dir/testCCompiler.c.o
+/usr/bin/cc    -o CMakeFiles/cmTryCompileExec4153660490.dir/testCCompiler.c.o   -c /home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp/testCCompiler.c
+Linking C executable cmTryCompileExec4153660490
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec4153660490.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTryCompileExec4153660490.dir/testCCompiler.c.o  -o cmTryCompileExec4153660490 -rdynamic 
 gmake[1]: Leaving directory `/home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp'
 
 
 Detecting C compiler ABI info compiled with the following output:
 Change Dir: /home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp
 
-Run Build Command:/usr/bin/gmake "cmTryCompileExec4253388404/fast"
-/usr/bin/gmake -f CMakeFiles/cmTryCompileExec4253388404.dir/build.make CMakeFiles/cmTryCompileExec4253388404.dir/build
+Run Build Command:/usr/bin/gmake "cmTryCompileExec2160324047/fast"
+/usr/bin/gmake -f CMakeFiles/cmTryCompileExec2160324047.dir/build.make CMakeFiles/cmTryCompileExec2160324047.dir/build
 gmake[1]: Entering directory `/home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp'
 /usr/bin/cmake -E cmake_progress_report /home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp/CMakeFiles 1
-Building C object CMakeFiles/cmTryCompileExec4253388404.dir/CMakeCCompilerABI.c.o
-/usr/bin/cc    -o CMakeFiles/cmTryCompileExec4253388404.dir/CMakeCCompilerABI.c.o   -c /usr/share/cmake/Modules/CMakeCCompilerABI.c
-Linking C executable cmTryCompileExec4253388404
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec4253388404.dir/link.txt --verbose=1
-/usr/bin/cc     -v CMakeFiles/cmTryCompileExec4253388404.dir/CMakeCCompilerABI.c.o  -o cmTryCompileExec4253388404 -rdynamic  
+Building C object CMakeFiles/cmTryCompileExec2160324047.dir/CMakeCCompilerABI.c.o
+/usr/bin/cc    -o CMakeFiles/cmTryCompileExec2160324047.dir/CMakeCCompilerABI.c.o   -c /usr/share/cmake/Modules/CMakeCCompilerABI.c
+Linking C executable cmTryCompileExec2160324047
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec2160324047.dir/link.txt --verbose=1
+/usr/bin/cc     -v CMakeFiles/cmTryCompileExec2160324047.dir/CMakeCCompilerABI.c.o  -o cmTryCompileExec2160324047 -rdynamic  
 Using built-in specs.
 COLLECT_GCC=/usr/bin/cc
 COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-redhat-linux/4.8.5/lto-wrapper
@@ -61,8 +61,8 @@ Thread model: posix
 gcc version 4.8.5 20150623 (Red Hat 4.8.5-11) (GCC) 
 COMPILER_PATH=/usr/libexec/gcc/x86_64-redhat-linux/4.8.5/:/usr/libexec/gcc/x86_64-redhat-linux/4.8.5/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/4.8.5/:/usr/lib/gcc/x86_64-redhat-linux/
 LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/4.8.5/:/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../:/lib/:/usr/lib/
-COLLECT_GCC_OPTIONS='-v' '-o' 'cmTryCompileExec4253388404' '-rdynamic' '-mtune=generic' '-march=x86-64'
- /usr/libexec/gcc/x86_64-redhat-linux/4.8.5/collect2 --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTryCompileExec4253388404 /usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/4.8.5/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/4.8.5 -L/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../.. CMakeFiles/cmTryCompileExec4253388404.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/lib/gcc/x86_64-redhat-linux/4.8.5/crtend.o /usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crtn.o
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTryCompileExec2160324047' '-rdynamic' '-mtune=generic' '-march=x86-64'
+ /usr/libexec/gcc/x86_64-redhat-linux/4.8.5/collect2 --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTryCompileExec2160324047 /usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/4.8.5/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/4.8.5 -L/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../.. CMakeFiles/cmTryCompileExec2160324047.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/lib/gcc/x86_64-redhat-linux/4.8.5/crtend.o /usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crtn.o
 gmake[1]: Leaving directory `/home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp'
 
 
@@ -70,15 +70,15 @@ Parsed C implicit link information from above output:
   link line regex: [^( *|.*[/\])(ld|([^/\]+-)?ld|collect2)[^/\]*( |$)]
   ignore line: [Change Dir: /home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp]
   ignore line: []
-  ignore line: [Run Build Command:/usr/bin/gmake "cmTryCompileExec4253388404/fast"]
-  ignore line: [/usr/bin/gmake -f CMakeFiles/cmTryCompileExec4253388404.dir/build.make CMakeFiles/cmTryCompileExec4253388404.dir/build]
+  ignore line: [Run Build Command:/usr/bin/gmake "cmTryCompileExec2160324047/fast"]
+  ignore line: [/usr/bin/gmake -f CMakeFiles/cmTryCompileExec2160324047.dir/build.make CMakeFiles/cmTryCompileExec2160324047.dir/build]
   ignore line: [gmake[1]: Entering directory `/home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp']
   ignore line: [/usr/bin/cmake -E cmake_progress_report /home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp/CMakeFiles 1]
-  ignore line: [Building C object CMakeFiles/cmTryCompileExec4253388404.dir/CMakeCCompilerABI.c.o]
-  ignore line: [/usr/bin/cc    -o CMakeFiles/cmTryCompileExec4253388404.dir/CMakeCCompilerABI.c.o   -c /usr/share/cmake/Modules/CMakeCCompilerABI.c]
-  ignore line: [Linking C executable cmTryCompileExec4253388404]
-  ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec4253388404.dir/link.txt --verbose=1]
-  ignore line: [/usr/bin/cc     -v CMakeFiles/cmTryCompileExec4253388404.dir/CMakeCCompilerABI.c.o  -o cmTryCompileExec4253388404 -rdynamic  ]
+  ignore line: [Building C object CMakeFiles/cmTryCompileExec2160324047.dir/CMakeCCompilerABI.c.o]
+  ignore line: [/usr/bin/cc    -o CMakeFiles/cmTryCompileExec2160324047.dir/CMakeCCompilerABI.c.o   -c /usr/share/cmake/Modules/CMakeCCompilerABI.c]
+  ignore line: [Linking C executable cmTryCompileExec2160324047]
+  ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec2160324047.dir/link.txt --verbose=1]
+  ignore line: [/usr/bin/cc     -v CMakeFiles/cmTryCompileExec2160324047.dir/CMakeCCompilerABI.c.o  -o cmTryCompileExec2160324047 -rdynamic  ]
   ignore line: [Using built-in specs.]
   ignore line: [COLLECT_GCC=/usr/bin/cc]
   ignore line: [COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-redhat-linux/4.8.5/lto-wrapper]
@@ -88,8 +88,8 @@ Parsed C implicit link information from above output:
   ignore line: [gcc version 4.8.5 20150623 (Red Hat 4.8.5-11) (GCC) ]
   ignore line: [COMPILER_PATH=/usr/libexec/gcc/x86_64-redhat-linux/4.8.5/:/usr/libexec/gcc/x86_64-redhat-linux/4.8.5/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/4.8.5/:/usr/lib/gcc/x86_64-redhat-linux/]
   ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/4.8.5/:/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../:/lib/:/usr/lib/]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTryCompileExec4253388404' '-rdynamic' '-mtune=generic' '-march=x86-64']
-  link line: [ /usr/libexec/gcc/x86_64-redhat-linux/4.8.5/collect2 --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTryCompileExec4253388404 /usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/4.8.5/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/4.8.5 -L/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../.. CMakeFiles/cmTryCompileExec4253388404.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/lib/gcc/x86_64-redhat-linux/4.8.5/crtend.o /usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crtn.o]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTryCompileExec2160324047' '-rdynamic' '-mtune=generic' '-march=x86-64']
+  link line: [ /usr/libexec/gcc/x86_64-redhat-linux/4.8.5/collect2 --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTryCompileExec2160324047 /usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/4.8.5/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/4.8.5 -L/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../.. CMakeFiles/cmTryCompileExec2160324047.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/lib/gcc/x86_64-redhat-linux/4.8.5/crtend.o /usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crtn.o]
     arg [/usr/libexec/gcc/x86_64-redhat-linux/4.8.5/collect2] ==> ignore
     arg [--build-id] ==> ignore
     arg [--no-add-needed] ==> ignore
@@ -101,7 +101,7 @@ Parsed C implicit link information from above output:
     arg [-dynamic-linker] ==> ignore
     arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
     arg [-o] ==> ignore
-    arg [cmTryCompileExec4253388404] ==> ignore
+    arg [cmTryCompileExec2160324047] ==> ignore
     arg [/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crt1.o] ==> ignore
     arg [/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crti.o] ==> ignore
     arg [/usr/lib/gcc/x86_64-redhat-linux/4.8.5/crtbegin.o] ==> ignore
@@ -110,7 +110,7 @@ Parsed C implicit link information from above output:
     arg [-L/lib/../lib64] ==> dir [/lib/../lib64]
     arg [-L/usr/lib/../lib64] ==> dir [/usr/lib/../lib64]
     arg [-L/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../..] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../..]
-    arg [CMakeFiles/cmTryCompileExec4253388404.dir/CMakeCCompilerABI.c.o] ==> ignore
+    arg [CMakeFiles/cmTryCompileExec2160324047.dir/CMakeCCompilerABI.c.o] ==> ignore
     arg [-lgcc] ==> lib [gcc]
     arg [--as-needed] ==> ignore
     arg [-lgcc_s] ==> lib [gcc_s]
@@ -139,30 +139,30 @@ Parsed C implicit link information from above output:
 Determining if the CXX compiler works passed with the following output:
 Change Dir: /home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp
 
-Run Build Command:/usr/bin/gmake "cmTryCompileExec1177806037/fast"
-/usr/bin/gmake -f CMakeFiles/cmTryCompileExec1177806037.dir/build.make CMakeFiles/cmTryCompileExec1177806037.dir/build
+Run Build Command:/usr/bin/gmake "cmTryCompileExec724020459/fast"
+/usr/bin/gmake -f CMakeFiles/cmTryCompileExec724020459.dir/build.make CMakeFiles/cmTryCompileExec724020459.dir/build
 gmake[1]: Entering directory `/home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp'
 /usr/bin/cmake -E cmake_progress_report /home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp/CMakeFiles 1
-Building CXX object CMakeFiles/cmTryCompileExec1177806037.dir/testCXXCompiler.cxx.o
-/usr/bin/c++     -o CMakeFiles/cmTryCompileExec1177806037.dir/testCXXCompiler.cxx.o -c /home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp/testCXXCompiler.cxx
-Linking CXX executable cmTryCompileExec1177806037
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec1177806037.dir/link.txt --verbose=1
-/usr/bin/c++        CMakeFiles/cmTryCompileExec1177806037.dir/testCXXCompiler.cxx.o  -o cmTryCompileExec1177806037 -rdynamic 
+Building CXX object CMakeFiles/cmTryCompileExec724020459.dir/testCXXCompiler.cxx.o
+/usr/bin/c++     -o CMakeFiles/cmTryCompileExec724020459.dir/testCXXCompiler.cxx.o -c /home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp/testCXXCompiler.cxx
+Linking CXX executable cmTryCompileExec724020459
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec724020459.dir/link.txt --verbose=1
+/usr/bin/c++        CMakeFiles/cmTryCompileExec724020459.dir/testCXXCompiler.cxx.o  -o cmTryCompileExec724020459 -rdynamic 
 gmake[1]: Leaving directory `/home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp'
 
 
 Detecting CXX compiler ABI info compiled with the following output:
 Change Dir: /home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp
 
-Run Build Command:/usr/bin/gmake "cmTryCompileExec3981628961/fast"
-/usr/bin/gmake -f CMakeFiles/cmTryCompileExec3981628961.dir/build.make CMakeFiles/cmTryCompileExec3981628961.dir/build
+Run Build Command:/usr/bin/gmake "cmTryCompileExec1817181540/fast"
+/usr/bin/gmake -f CMakeFiles/cmTryCompileExec1817181540.dir/build.make CMakeFiles/cmTryCompileExec1817181540.dir/build
 gmake[1]: Entering directory `/home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp'
 /usr/bin/cmake -E cmake_progress_report /home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp/CMakeFiles 1
-Building CXX object CMakeFiles/cmTryCompileExec3981628961.dir/CMakeCXXCompilerABI.cpp.o
-/usr/bin/c++     -o CMakeFiles/cmTryCompileExec3981628961.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp
-Linking CXX executable cmTryCompileExec3981628961
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec3981628961.dir/link.txt --verbose=1
-/usr/bin/c++      -v CMakeFiles/cmTryCompileExec3981628961.dir/CMakeCXXCompilerABI.cpp.o  -o cmTryCompileExec3981628961 -rdynamic  
+Building CXX object CMakeFiles/cmTryCompileExec1817181540.dir/CMakeCXXCompilerABI.cpp.o
+/usr/bin/c++     -o CMakeFiles/cmTryCompileExec1817181540.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp
+Linking CXX executable cmTryCompileExec1817181540
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec1817181540.dir/link.txt --verbose=1
+/usr/bin/c++      -v CMakeFiles/cmTryCompileExec1817181540.dir/CMakeCXXCompilerABI.cpp.o  -o cmTryCompileExec1817181540 -rdynamic  
 Using built-in specs.
 COLLECT_GCC=/usr/bin/c++
 COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-redhat-linux/4.8.5/lto-wrapper
@@ -172,8 +172,8 @@ Thread model: posix
 gcc version 4.8.5 20150623 (Red Hat 4.8.5-11) (GCC) 
 COMPILER_PATH=/usr/libexec/gcc/x86_64-redhat-linux/4.8.5/:/usr/libexec/gcc/x86_64-redhat-linux/4.8.5/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/4.8.5/:/usr/lib/gcc/x86_64-redhat-linux/
 LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/4.8.5/:/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../:/lib/:/usr/lib/
-COLLECT_GCC_OPTIONS='-v' '-o' 'cmTryCompileExec3981628961' '-rdynamic' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
- /usr/libexec/gcc/x86_64-redhat-linux/4.8.5/collect2 --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTryCompileExec3981628961 /usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/4.8.5/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/4.8.5 -L/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../.. CMakeFiles/cmTryCompileExec3981628961.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-redhat-linux/4.8.5/crtend.o /usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crtn.o
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTryCompileExec1817181540' '-rdynamic' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
+ /usr/libexec/gcc/x86_64-redhat-linux/4.8.5/collect2 --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTryCompileExec1817181540 /usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/4.8.5/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/4.8.5 -L/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../.. CMakeFiles/cmTryCompileExec1817181540.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-redhat-linux/4.8.5/crtend.o /usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crtn.o
 gmake[1]: Leaving directory `/home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp'
 
 
@@ -181,15 +181,15 @@ Parsed CXX implicit link information from above output:
   link line regex: [^( *|.*[/\])(ld|([^/\]+-)?ld|collect2)[^/\]*( |$)]
   ignore line: [Change Dir: /home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp]
   ignore line: []
-  ignore line: [Run Build Command:/usr/bin/gmake "cmTryCompileExec3981628961/fast"]
-  ignore line: [/usr/bin/gmake -f CMakeFiles/cmTryCompileExec3981628961.dir/build.make CMakeFiles/cmTryCompileExec3981628961.dir/build]
+  ignore line: [Run Build Command:/usr/bin/gmake "cmTryCompileExec1817181540/fast"]
+  ignore line: [/usr/bin/gmake -f CMakeFiles/cmTryCompileExec1817181540.dir/build.make CMakeFiles/cmTryCompileExec1817181540.dir/build]
   ignore line: [gmake[1]: Entering directory `/home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp']
   ignore line: [/usr/bin/cmake -E cmake_progress_report /home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp/CMakeFiles 1]
-  ignore line: [Building CXX object CMakeFiles/cmTryCompileExec3981628961.dir/CMakeCXXCompilerABI.cpp.o]
-  ignore line: [/usr/bin/c++     -o CMakeFiles/cmTryCompileExec3981628961.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp]
-  ignore line: [Linking CXX executable cmTryCompileExec3981628961]
-  ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec3981628961.dir/link.txt --verbose=1]
-  ignore line: [/usr/bin/c++      -v CMakeFiles/cmTryCompileExec3981628961.dir/CMakeCXXCompilerABI.cpp.o  -o cmTryCompileExec3981628961 -rdynamic  ]
+  ignore line: [Building CXX object CMakeFiles/cmTryCompileExec1817181540.dir/CMakeCXXCompilerABI.cpp.o]
+  ignore line: [/usr/bin/c++     -o CMakeFiles/cmTryCompileExec1817181540.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp]
+  ignore line: [Linking CXX executable cmTryCompileExec1817181540]
+  ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec1817181540.dir/link.txt --verbose=1]
+  ignore line: [/usr/bin/c++      -v CMakeFiles/cmTryCompileExec1817181540.dir/CMakeCXXCompilerABI.cpp.o  -o cmTryCompileExec1817181540 -rdynamic  ]
   ignore line: [Using built-in specs.]
   ignore line: [COLLECT_GCC=/usr/bin/c++]
   ignore line: [COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-redhat-linux/4.8.5/lto-wrapper]
@@ -199,8 +199,8 @@ Parsed CXX implicit link information from above output:
   ignore line: [gcc version 4.8.5 20150623 (Red Hat 4.8.5-11) (GCC) ]
   ignore line: [COMPILER_PATH=/usr/libexec/gcc/x86_64-redhat-linux/4.8.5/:/usr/libexec/gcc/x86_64-redhat-linux/4.8.5/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/4.8.5/:/usr/lib/gcc/x86_64-redhat-linux/]
   ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/4.8.5/:/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../:/lib/:/usr/lib/]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTryCompileExec3981628961' '-rdynamic' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
-  link line: [ /usr/libexec/gcc/x86_64-redhat-linux/4.8.5/collect2 --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTryCompileExec3981628961 /usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/4.8.5/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/4.8.5 -L/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../.. CMakeFiles/cmTryCompileExec3981628961.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-redhat-linux/4.8.5/crtend.o /usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crtn.o]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTryCompileExec1817181540' '-rdynamic' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
+  link line: [ /usr/libexec/gcc/x86_64-redhat-linux/4.8.5/collect2 --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTryCompileExec1817181540 /usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/4.8.5/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/4.8.5 -L/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../.. CMakeFiles/cmTryCompileExec1817181540.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-redhat-linux/4.8.5/crtend.o /usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crtn.o]
     arg [/usr/libexec/gcc/x86_64-redhat-linux/4.8.5/collect2] ==> ignore
     arg [--build-id] ==> ignore
     arg [--no-add-needed] ==> ignore
@@ -212,7 +212,7 @@ Parsed CXX implicit link information from above output:
     arg [-dynamic-linker] ==> ignore
     arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
     arg [-o] ==> ignore
-    arg [cmTryCompileExec3981628961] ==> ignore
+    arg [cmTryCompileExec1817181540] ==> ignore
     arg [/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crt1.o] ==> ignore
     arg [/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crti.o] ==> ignore
     arg [/usr/lib/gcc/x86_64-redhat-linux/4.8.5/crtbegin.o] ==> ignore
@@ -221,7 +221,7 @@ Parsed CXX implicit link information from above output:
     arg [-L/lib/../lib64] ==> dir [/lib/../lib64]
     arg [-L/usr/lib/../lib64] ==> dir [/usr/lib/../lib64]
     arg [-L/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../..] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../..]
-    arg [CMakeFiles/cmTryCompileExec3981628961.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+    arg [CMakeFiles/cmTryCompileExec1817181540.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
     arg [-lstdc++] ==> lib [stdc++]
     arg [-lm] ==> lib [m]
     arg [-lgcc_s] ==> lib [gcc_s]
@@ -248,180 +248,180 @@ Parsed CXX implicit link information from above output:
 Determining if the include file alloca.h exists passed with the following output:
 Change Dir: /home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp
 
-Run Build Command:/usr/bin/gmake "cmTryCompileExec2121230827/fast"
-/usr/bin/gmake -f CMakeFiles/cmTryCompileExec2121230827.dir/build.make CMakeFiles/cmTryCompileExec2121230827.dir/build
+Run Build Command:/usr/bin/gmake "cmTryCompileExec964085678/fast"
+/usr/bin/gmake -f CMakeFiles/cmTryCompileExec964085678.dir/build.make CMakeFiles/cmTryCompileExec964085678.dir/build
 gmake[1]: Entering directory `/home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp'
 /usr/bin/cmake -E cmake_progress_report /home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp/CMakeFiles 1
-Building C object CMakeFiles/cmTryCompileExec2121230827.dir/CheckIncludeFile.c.o
-/usr/bin/cc    -o CMakeFiles/cmTryCompileExec2121230827.dir/CheckIncludeFile.c.o   -c /home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp/CheckIncludeFile.c
-Linking C executable cmTryCompileExec2121230827
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec2121230827.dir/link.txt --verbose=1
-/usr/bin/cc       CMakeFiles/cmTryCompileExec2121230827.dir/CheckIncludeFile.c.o  -o cmTryCompileExec2121230827 -rdynamic 
+Building C object CMakeFiles/cmTryCompileExec964085678.dir/CheckIncludeFile.c.o
+/usr/bin/cc    -o CMakeFiles/cmTryCompileExec964085678.dir/CheckIncludeFile.c.o   -c /home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+Linking C executable cmTryCompileExec964085678
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec964085678.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTryCompileExec964085678.dir/CheckIncludeFile.c.o  -o cmTryCompileExec964085678 -rdynamic 
 gmake[1]: Leaving directory `/home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp'
 
 
 Determining if the include file dlfcn.h exists passed with the following output:
 Change Dir: /home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp
 
-Run Build Command:/usr/bin/gmake "cmTryCompileExec3989763391/fast"
-/usr/bin/gmake -f CMakeFiles/cmTryCompileExec3989763391.dir/build.make CMakeFiles/cmTryCompileExec3989763391.dir/build
+Run Build Command:/usr/bin/gmake "cmTryCompileExec4076937341/fast"
+/usr/bin/gmake -f CMakeFiles/cmTryCompileExec4076937341.dir/build.make CMakeFiles/cmTryCompileExec4076937341.dir/build
 gmake[1]: Entering directory `/home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp'
 /usr/bin/cmake -E cmake_progress_report /home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp/CMakeFiles 1
-Building C object CMakeFiles/cmTryCompileExec3989763391.dir/CheckIncludeFile.c.o
-/usr/bin/cc    -o CMakeFiles/cmTryCompileExec3989763391.dir/CheckIncludeFile.c.o   -c /home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp/CheckIncludeFile.c
-Linking C executable cmTryCompileExec3989763391
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec3989763391.dir/link.txt --verbose=1
-/usr/bin/cc       CMakeFiles/cmTryCompileExec3989763391.dir/CheckIncludeFile.c.o  -o cmTryCompileExec3989763391 -rdynamic 
+Building C object CMakeFiles/cmTryCompileExec4076937341.dir/CheckIncludeFile.c.o
+/usr/bin/cc    -o CMakeFiles/cmTryCompileExec4076937341.dir/CheckIncludeFile.c.o   -c /home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+Linking C executable cmTryCompileExec4076937341
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec4076937341.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTryCompileExec4076937341.dir/CheckIncludeFile.c.o  -o cmTryCompileExec4076937341 -rdynamic 
 gmake[1]: Leaving directory `/home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp'
 
 
 Determining if the include file errno.h exists passed with the following output:
 Change Dir: /home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp
 
-Run Build Command:/usr/bin/gmake "cmTryCompileExec1057075648/fast"
-/usr/bin/gmake -f CMakeFiles/cmTryCompileExec1057075648.dir/build.make CMakeFiles/cmTryCompileExec1057075648.dir/build
+Run Build Command:/usr/bin/gmake "cmTryCompileExec3080212581/fast"
+/usr/bin/gmake -f CMakeFiles/cmTryCompileExec3080212581.dir/build.make CMakeFiles/cmTryCompileExec3080212581.dir/build
 gmake[1]: Entering directory `/home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp'
 /usr/bin/cmake -E cmake_progress_report /home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp/CMakeFiles 1
-Building C object CMakeFiles/cmTryCompileExec1057075648.dir/CheckIncludeFile.c.o
-/usr/bin/cc    -o CMakeFiles/cmTryCompileExec1057075648.dir/CheckIncludeFile.c.o   -c /home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp/CheckIncludeFile.c
-Linking C executable cmTryCompileExec1057075648
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec1057075648.dir/link.txt --verbose=1
-/usr/bin/cc       CMakeFiles/cmTryCompileExec1057075648.dir/CheckIncludeFile.c.o  -o cmTryCompileExec1057075648 -rdynamic 
+Building C object CMakeFiles/cmTryCompileExec3080212581.dir/CheckIncludeFile.c.o
+/usr/bin/cc    -o CMakeFiles/cmTryCompileExec3080212581.dir/CheckIncludeFile.c.o   -c /home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+Linking C executable cmTryCompileExec3080212581
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec3080212581.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTryCompileExec3080212581.dir/CheckIncludeFile.c.o  -o cmTryCompileExec3080212581 -rdynamic 
 gmake[1]: Leaving directory `/home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp'
 
 
 Determining if the include file fcntl.h exists passed with the following output:
 Change Dir: /home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp
 
-Run Build Command:/usr/bin/gmake "cmTryCompileExec2152968449/fast"
-/usr/bin/gmake -f CMakeFiles/cmTryCompileExec2152968449.dir/build.make CMakeFiles/cmTryCompileExec2152968449.dir/build
+Run Build Command:/usr/bin/gmake "cmTryCompileExec2746373015/fast"
+/usr/bin/gmake -f CMakeFiles/cmTryCompileExec2746373015.dir/build.make CMakeFiles/cmTryCompileExec2746373015.dir/build
 gmake[1]: Entering directory `/home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp'
 /usr/bin/cmake -E cmake_progress_report /home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp/CMakeFiles 1
-Building C object CMakeFiles/cmTryCompileExec2152968449.dir/CheckIncludeFile.c.o
-/usr/bin/cc    -o CMakeFiles/cmTryCompileExec2152968449.dir/CheckIncludeFile.c.o   -c /home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp/CheckIncludeFile.c
-Linking C executable cmTryCompileExec2152968449
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec2152968449.dir/link.txt --verbose=1
-/usr/bin/cc       CMakeFiles/cmTryCompileExec2152968449.dir/CheckIncludeFile.c.o  -o cmTryCompileExec2152968449 -rdynamic 
+Building C object CMakeFiles/cmTryCompileExec2746373015.dir/CheckIncludeFile.c.o
+/usr/bin/cc    -o CMakeFiles/cmTryCompileExec2746373015.dir/CheckIncludeFile.c.o   -c /home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+Linking C executable cmTryCompileExec2746373015
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec2746373015.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTryCompileExec2746373015.dir/CheckIncludeFile.c.o  -o cmTryCompileExec2746373015 -rdynamic 
 gmake[1]: Leaving directory `/home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp'
 
 
 Determining if the include file inttypes.h exists passed with the following output:
 Change Dir: /home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp
 
-Run Build Command:/usr/bin/gmake "cmTryCompileExec1240123543/fast"
-/usr/bin/gmake -f CMakeFiles/cmTryCompileExec1240123543.dir/build.make CMakeFiles/cmTryCompileExec1240123543.dir/build
+Run Build Command:/usr/bin/gmake "cmTryCompileExec322043820/fast"
+/usr/bin/gmake -f CMakeFiles/cmTryCompileExec322043820.dir/build.make CMakeFiles/cmTryCompileExec322043820.dir/build
 gmake[1]: Entering directory `/home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp'
 /usr/bin/cmake -E cmake_progress_report /home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp/CMakeFiles 1
-Building C object CMakeFiles/cmTryCompileExec1240123543.dir/CheckIncludeFile.c.o
-/usr/bin/cc    -o CMakeFiles/cmTryCompileExec1240123543.dir/CheckIncludeFile.c.o   -c /home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp/CheckIncludeFile.c
-Linking C executable cmTryCompileExec1240123543
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec1240123543.dir/link.txt --verbose=1
-/usr/bin/cc       CMakeFiles/cmTryCompileExec1240123543.dir/CheckIncludeFile.c.o  -o cmTryCompileExec1240123543 -rdynamic 
+Building C object CMakeFiles/cmTryCompileExec322043820.dir/CheckIncludeFile.c.o
+/usr/bin/cc    -o CMakeFiles/cmTryCompileExec322043820.dir/CheckIncludeFile.c.o   -c /home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+Linking C executable cmTryCompileExec322043820
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec322043820.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTryCompileExec322043820.dir/CheckIncludeFile.c.o  -o cmTryCompileExec322043820 -rdynamic 
 gmake[1]: Leaving directory `/home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp'
 
 
 Determining if the include file limits.h exists passed with the following output:
 Change Dir: /home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp
 
-Run Build Command:/usr/bin/gmake "cmTryCompileExec2066844735/fast"
-/usr/bin/gmake -f CMakeFiles/cmTryCompileExec2066844735.dir/build.make CMakeFiles/cmTryCompileExec2066844735.dir/build
+Run Build Command:/usr/bin/gmake "cmTryCompileExec1400717235/fast"
+/usr/bin/gmake -f CMakeFiles/cmTryCompileExec1400717235.dir/build.make CMakeFiles/cmTryCompileExec1400717235.dir/build
 gmake[1]: Entering directory `/home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp'
 /usr/bin/cmake -E cmake_progress_report /home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp/CMakeFiles 1
-Building C object CMakeFiles/cmTryCompileExec2066844735.dir/CheckIncludeFile.c.o
-/usr/bin/cc    -o CMakeFiles/cmTryCompileExec2066844735.dir/CheckIncludeFile.c.o   -c /home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp/CheckIncludeFile.c
-Linking C executable cmTryCompileExec2066844735
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec2066844735.dir/link.txt --verbose=1
-/usr/bin/cc       CMakeFiles/cmTryCompileExec2066844735.dir/CheckIncludeFile.c.o  -o cmTryCompileExec2066844735 -rdynamic 
+Building C object CMakeFiles/cmTryCompileExec1400717235.dir/CheckIncludeFile.c.o
+/usr/bin/cc    -o CMakeFiles/cmTryCompileExec1400717235.dir/CheckIncludeFile.c.o   -c /home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+Linking C executable cmTryCompileExec1400717235
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec1400717235.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTryCompileExec1400717235.dir/CheckIncludeFile.c.o  -o cmTryCompileExec1400717235 -rdynamic 
 gmake[1]: Leaving directory `/home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp'
 
 
 Determining if the include file pthread.h exists passed with the following output:
 Change Dir: /home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp
 
-Run Build Command:/usr/bin/gmake "cmTryCompileExec905647884/fast"
-/usr/bin/gmake -f CMakeFiles/cmTryCompileExec905647884.dir/build.make CMakeFiles/cmTryCompileExec905647884.dir/build
+Run Build Command:/usr/bin/gmake "cmTryCompileExec268387089/fast"
+/usr/bin/gmake -f CMakeFiles/cmTryCompileExec268387089.dir/build.make CMakeFiles/cmTryCompileExec268387089.dir/build
 gmake[1]: Entering directory `/home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp'
 /usr/bin/cmake -E cmake_progress_report /home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp/CMakeFiles 1
-Building C object CMakeFiles/cmTryCompileExec905647884.dir/CheckIncludeFile.c.o
-/usr/bin/cc    -o CMakeFiles/cmTryCompileExec905647884.dir/CheckIncludeFile.c.o   -c /home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp/CheckIncludeFile.c
-Linking C executable cmTryCompileExec905647884
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec905647884.dir/link.txt --verbose=1
-/usr/bin/cc       CMakeFiles/cmTryCompileExec905647884.dir/CheckIncludeFile.c.o  -o cmTryCompileExec905647884 -rdynamic 
+Building C object CMakeFiles/cmTryCompileExec268387089.dir/CheckIncludeFile.c.o
+/usr/bin/cc    -o CMakeFiles/cmTryCompileExec268387089.dir/CheckIncludeFile.c.o   -c /home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+Linking C executable cmTryCompileExec268387089
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec268387089.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTryCompileExec268387089.dir/CheckIncludeFile.c.o  -o cmTryCompileExec268387089 -rdynamic 
 gmake[1]: Leaving directory `/home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp'
 
 
 Determining if the include file stdint.h exists passed with the following output:
 Change Dir: /home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp
 
-Run Build Command:/usr/bin/gmake "cmTryCompileExec419415541/fast"
-/usr/bin/gmake -f CMakeFiles/cmTryCompileExec419415541.dir/build.make CMakeFiles/cmTryCompileExec419415541.dir/build
+Run Build Command:/usr/bin/gmake "cmTryCompileExec2858215754/fast"
+/usr/bin/gmake -f CMakeFiles/cmTryCompileExec2858215754.dir/build.make CMakeFiles/cmTryCompileExec2858215754.dir/build
 gmake[1]: Entering directory `/home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp'
 /usr/bin/cmake -E cmake_progress_report /home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp/CMakeFiles 1
-Building C object CMakeFiles/cmTryCompileExec419415541.dir/CheckIncludeFile.c.o
-/usr/bin/cc    -o CMakeFiles/cmTryCompileExec419415541.dir/CheckIncludeFile.c.o   -c /home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp/CheckIncludeFile.c
-Linking C executable cmTryCompileExec419415541
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec419415541.dir/link.txt --verbose=1
-/usr/bin/cc       CMakeFiles/cmTryCompileExec419415541.dir/CheckIncludeFile.c.o  -o cmTryCompileExec419415541 -rdynamic 
+Building C object CMakeFiles/cmTryCompileExec2858215754.dir/CheckIncludeFile.c.o
+/usr/bin/cc    -o CMakeFiles/cmTryCompileExec2858215754.dir/CheckIncludeFile.c.o   -c /home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+Linking C executable cmTryCompileExec2858215754
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec2858215754.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTryCompileExec2858215754.dir/CheckIncludeFile.c.o  -o cmTryCompileExec2858215754 -rdynamic 
 gmake[1]: Leaving directory `/home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp'
 
 
 Determining if the include file sys/types.h exists passed with the following output:
 Change Dir: /home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp
 
-Run Build Command:/usr/bin/gmake "cmTryCompileExec4081287620/fast"
-/usr/bin/gmake -f CMakeFiles/cmTryCompileExec4081287620.dir/build.make CMakeFiles/cmTryCompileExec4081287620.dir/build
+Run Build Command:/usr/bin/gmake "cmTryCompileExec3664313086/fast"
+/usr/bin/gmake -f CMakeFiles/cmTryCompileExec3664313086.dir/build.make CMakeFiles/cmTryCompileExec3664313086.dir/build
 gmake[1]: Entering directory `/home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp'
 /usr/bin/cmake -E cmake_progress_report /home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp/CMakeFiles 1
-Building C object CMakeFiles/cmTryCompileExec4081287620.dir/CheckIncludeFile.c.o
-/usr/bin/cc    -o CMakeFiles/cmTryCompileExec4081287620.dir/CheckIncludeFile.c.o   -c /home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp/CheckIncludeFile.c
-Linking C executable cmTryCompileExec4081287620
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec4081287620.dir/link.txt --verbose=1
-/usr/bin/cc       CMakeFiles/cmTryCompileExec4081287620.dir/CheckIncludeFile.c.o  -o cmTryCompileExec4081287620 -rdynamic 
+Building C object CMakeFiles/cmTryCompileExec3664313086.dir/CheckIncludeFile.c.o
+/usr/bin/cc    -o CMakeFiles/cmTryCompileExec3664313086.dir/CheckIncludeFile.c.o   -c /home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+Linking C executable cmTryCompileExec3664313086
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec3664313086.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTryCompileExec3664313086.dir/CheckIncludeFile.c.o  -o cmTryCompileExec3664313086 -rdynamic 
 gmake[1]: Leaving directory `/home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp'
 
 
 Determining if the include file syslog.h exists passed with the following output:
 Change Dir: /home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp
 
-Run Build Command:/usr/bin/gmake "cmTryCompileExec3028218414/fast"
-/usr/bin/gmake -f CMakeFiles/cmTryCompileExec3028218414.dir/build.make CMakeFiles/cmTryCompileExec3028218414.dir/build
+Run Build Command:/usr/bin/gmake "cmTryCompileExec3774036028/fast"
+/usr/bin/gmake -f CMakeFiles/cmTryCompileExec3774036028.dir/build.make CMakeFiles/cmTryCompileExec3774036028.dir/build
 gmake[1]: Entering directory `/home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp'
 /usr/bin/cmake -E cmake_progress_report /home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp/CMakeFiles 1
-Building C object CMakeFiles/cmTryCompileExec3028218414.dir/CheckIncludeFile.c.o
-/usr/bin/cc    -o CMakeFiles/cmTryCompileExec3028218414.dir/CheckIncludeFile.c.o   -c /home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp/CheckIncludeFile.c
-Linking C executable cmTryCompileExec3028218414
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec3028218414.dir/link.txt --verbose=1
-/usr/bin/cc       CMakeFiles/cmTryCompileExec3028218414.dir/CheckIncludeFile.c.o  -o cmTryCompileExec3028218414 -rdynamic 
+Building C object CMakeFiles/cmTryCompileExec3774036028.dir/CheckIncludeFile.c.o
+/usr/bin/cc    -o CMakeFiles/cmTryCompileExec3774036028.dir/CheckIncludeFile.c.o   -c /home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+Linking C executable cmTryCompileExec3774036028
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec3774036028.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTryCompileExec3774036028.dir/CheckIncludeFile.c.o  -o cmTryCompileExec3774036028 -rdynamic 
 gmake[1]: Leaving directory `/home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp'
 
 
 Determining if the include file time.h exists passed with the following output:
 Change Dir: /home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp
 
-Run Build Command:/usr/bin/gmake "cmTryCompileExec589720118/fast"
-/usr/bin/gmake -f CMakeFiles/cmTryCompileExec589720118.dir/build.make CMakeFiles/cmTryCompileExec589720118.dir/build
+Run Build Command:/usr/bin/gmake "cmTryCompileExec57660080/fast"
+/usr/bin/gmake -f CMakeFiles/cmTryCompileExec57660080.dir/build.make CMakeFiles/cmTryCompileExec57660080.dir/build
 gmake[1]: Entering directory `/home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp'
 /usr/bin/cmake -E cmake_progress_report /home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp/CMakeFiles 1
-Building C object CMakeFiles/cmTryCompileExec589720118.dir/CheckIncludeFile.c.o
-/usr/bin/cc    -o CMakeFiles/cmTryCompileExec589720118.dir/CheckIncludeFile.c.o   -c /home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp/CheckIncludeFile.c
-Linking C executable cmTryCompileExec589720118
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec589720118.dir/link.txt --verbose=1
-/usr/bin/cc       CMakeFiles/cmTryCompileExec589720118.dir/CheckIncludeFile.c.o  -o cmTryCompileExec589720118 -rdynamic 
+Building C object CMakeFiles/cmTryCompileExec57660080.dir/CheckIncludeFile.c.o
+/usr/bin/cc    -o CMakeFiles/cmTryCompileExec57660080.dir/CheckIncludeFile.c.o   -c /home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+Linking C executable cmTryCompileExec57660080
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec57660080.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTryCompileExec57660080.dir/CheckIncludeFile.c.o  -o cmTryCompileExec57660080 -rdynamic 
 gmake[1]: Leaving directory `/home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp'
 
 
 Determining if the include file unistd.h exists passed with the following output:
 Change Dir: /home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp
 
-Run Build Command:/usr/bin/gmake "cmTryCompileExec2046408559/fast"
-/usr/bin/gmake -f CMakeFiles/cmTryCompileExec2046408559.dir/build.make CMakeFiles/cmTryCompileExec2046408559.dir/build
+Run Build Command:/usr/bin/gmake "cmTryCompileExec3538977988/fast"
+/usr/bin/gmake -f CMakeFiles/cmTryCompileExec3538977988.dir/build.make CMakeFiles/cmTryCompileExec3538977988.dir/build
 gmake[1]: Entering directory `/home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp'
 /usr/bin/cmake -E cmake_progress_report /home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp/CMakeFiles 1
-Building C object CMakeFiles/cmTryCompileExec2046408559.dir/CheckIncludeFile.c.o
-/usr/bin/cc    -o CMakeFiles/cmTryCompileExec2046408559.dir/CheckIncludeFile.c.o   -c /home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp/CheckIncludeFile.c
-Linking C executable cmTryCompileExec2046408559
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec2046408559.dir/link.txt --verbose=1
-/usr/bin/cc       CMakeFiles/cmTryCompileExec2046408559.dir/CheckIncludeFile.c.o  -o cmTryCompileExec2046408559 -rdynamic 
+Building C object CMakeFiles/cmTryCompileExec3538977988.dir/CheckIncludeFile.c.o
+/usr/bin/cc    -o CMakeFiles/cmTryCompileExec3538977988.dir/CheckIncludeFile.c.o   -c /home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+Linking C executable cmTryCompileExec3538977988
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec3538977988.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTryCompileExec3538977988.dir/CheckIncludeFile.c.o  -o cmTryCompileExec3538977988 -rdynamic 
 gmake[1]: Leaving directory `/home/mdomenighini/plugin_module/build/CMakeFiles/CMakeTmp'
 
 

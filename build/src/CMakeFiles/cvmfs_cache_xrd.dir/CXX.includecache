@@ -43,6 +43,4 @@ sys/stat.h
 -
 libcvmfs_cache.h
 /home/mdomenighini/plugin_module/src/libcvmfs_cache.h
-XrdPosix/XrdPosix.hh
-/home/mdomenighini/plugin_module/src/XrdPosix/XrdPosix.hh
 
