@@ -1,1 +1,0 @@
-/usr/bin/c++    -Os -g -fno-exceptions -fno-strict-aliasing -fasynchronous-unwind-tables -fno-omit-frame-pointer -fvisibility=hidden -Wall -D_REENTRANT -D__EXTENSIONS__ -D_LARGEFILE64_SOURCE -D__LARGE64_FILES    CMakeFiles/cvmfs_cache_xrd.dir/cvmfs_cache_xrd.cc.o  -o cvmfs_cache_xrd -rdynamic -Wl,-Bstatic -lcvmfs_cache -Wl,-Bdynamic 

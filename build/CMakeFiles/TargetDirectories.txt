@@ -1,1 +1,0 @@
-/home/mdomenighini/plugin_module/build/src/CMakeFiles/cvmfs_cache_xrd.dir

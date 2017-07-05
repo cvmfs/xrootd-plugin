@@ -12,21 +12,32 @@
 #include <stdint.h>
 #include <unistd.h>
 
+#include <fcntl.h>
+#include <errno.h>
 #include <cassert>
+#include <stdio.h>
+#include <stdlib.h>
 #include <cstdio>
 #include <cstring>
 #include <ctime>
 #include <map>
 #include <string>
 #include <vector>
+#include <sys/types.h>
+#include <sys/stat.h>
 
 #include "libcvmfs_cache.h"
+// #include "XrdPosix/XrdPosix.hh"
 
 using namespace std;  // NOLINT
 
-const char *rproto = 'root://';
-const char *xproto = 'xroot://';
-const char *domain = 'localhost:1094//'
+#define BUF_SIZE 8192
+
+
+const char *rproto = "root://";
+const char *xproto = "xroot://";
+const char *domain = "localhost:1094//";
+char *urlbuffer = new char [BUF_SIZE];
 
 struct Object {
   struct cvmcache_hash id;
@@ -69,15 +80,13 @@ map<uint64_t, Listing> listings;
 struct cvmcache_context *ctx;
 
 static int null_getpath(struct cvmcache_hash *id) {
-  std::string h1 = (id->digest).substring(0,2);
-  std::string h2 = (id->digest).substring(2,18);
 
   //Build URL
-  strcpy(tmpbuff, rproto);
-  strcat(tmpbuff, domain);
-  strcat(tmpbuff, h1);
-  strcat(tmpbuff, "/");
-  strcat(tmpbuff, h2);
+  strcpy(urlbuffer, rproto);
+  strcat(urlbuffer, domain);
+  strncat(urlbuffer, reinterpret_cast<const char*>(id->digest[0]), 2);
+  strcat(urlbuffer, "/");
+  strncat(urlbuffer, reinterpret_cast<const char*>(id->digest[2]), 17);
 
   return CVMCACHE_STATUS_OK;
 }
@@ -88,29 +97,27 @@ static int null_getpath(struct cvmcache_hash *id) {
   */
 static int null_chrefcnt(struct cvmcache_hash *id, int32_t change_by) {
   ComparableHash h(*id);
-  char *tmpbuff = new char [BUF_SIZE];
 
-  null_getpath();
+  null_getpath(id);
 
   if (storage.find(h) == storage.end())
     return CVMCACHE_STATUS_NOENTRY;
   Object obj = storage[h];
 
-  if (change_by == 1){
-    obj.fd = open(tmpbuff, O_RDONLY);
+  if (change_by > 0){
+    obj.fd = open(urlbuffer, O_RDONLY);
     if (obj.fd <0)
       return CVMCACHE_STATUS_BADCOUNT;
   }
 
   //TODO: check the appropriate error to return.
-  if (change_by == -1){
-    obj.fd = close(tmpbuff, O_RDONLY);
+  if (change_by < 0){
+    obj.fd = close(obj.fd);
     if (obj.fd <0)
       return CVMCACHE_STATUS_BADCOUNT;
   }
 
   obj.refcnt += change_by;
-  delete [] tmpbuff;
   return CVMCACHE_STATUS_OK;
 }
 
@@ -123,7 +130,7 @@ static int null_obj_info(
   struct cvmcache_hash *id,
   struct cvmcache_object_info *info)
 {
-  struct stat *tmpbuff = new struct stat [BUF_SIZE]
+  struct stat *statbuffer = new struct stat [BUF_SIZE];
   ComparableHash h(*id);
   if (storage.find(h) == storage.end())
     return CVMCACHE_STATUS_NOENTRY;
@@ -134,11 +141,12 @@ static int null_obj_info(
   if (obj.refcnt <= 0)
     return CVMCACHE_STATUS_BADCOUNT;
 
-  if (!(fstat(obj.fd, tmpbuff)))
-    info->size=obj.st_size;
+  if (!(fstat(obj.fd, statbuffer)))
+    info->size=statbuffer->st_size;
   else
     return -errno;
 
+  delete [] statbuffer;
   return CVMCACHE_STATUS_OK;
 }
 
@@ -151,17 +159,33 @@ static int null_pread(struct cvmcache_hash *id,
                     uint32_t *size,
                     unsigned char *buffer)
 {
+  struct stat *statbuffer = new struct stat [BUF_SIZE];
+
   ComparableHash h(*id);
   int numbytes;
-  Object obj=storage[h];
+  null_getpath(id);
 
+  if (storage.find(h) == storage.end())
+    return CVMCACHE_STATUS_NOENTRY;
+
+  Object obj = storage[h];
+  if (obj.fd < 0)
+    return CVMCACHE_STATUS_NOENTRY;
+
+  if (fstat(obj.fd, statbuffer))
+    return -errno;
+  size_t file_size = statbuffer->st_size;
+
+  delete [] statbuffer;
   // returns an error if the offset is larget than the file size
   if (offset > lseek(obj.fd, 0, SEEK_END))
     return CVMCACHE_STATUS_OUTOFBOUNDS;
+
   //number of bytes the data occupies
-  numbytes = pread(obj.fd, buffer, offset);
+  numbytes = pread(obj.fd, buffer, file_size, offset);
   if (numbytes < 0)
     return -errno;
+
   return CVMCACHE_STATUS_OK;
 }
 
