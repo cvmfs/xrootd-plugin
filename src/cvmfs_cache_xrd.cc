@@ -31,13 +31,9 @@
 
 using namespace std;  // NOLINT
 
-#define BUF_SIZE 8192
+#define BUF_SIZE 16386
 
-
-const char *rproto = "root://";
-const char *xproto = "xroot://";
-const char *domain = "localhost:1094//";
-char *urlbuffer = new char [BUF_SIZE];
+const char *directory = "/var/lib/cvmfs/posix-upper/";
 
 struct Object {
   struct cvmcache_hash id;
@@ -50,9 +46,7 @@ struct TxnInfo {
   Object partial_object;
 };
 
-/**
-  * List of elements requested by a client.
-  */
+// List of elements requested by a client.
 struct Listing {
   Listing() : pos(0) { }
   cvmcache_object_type type;
@@ -60,9 +54,7 @@ struct Listing {
   vector<Object> *elems;
 };
 
-/**
-  * Fancy way to organize the hash codes.
-  */
+// Fancy way to organize the hash codes.
 struct ComparableHash {
   ComparableHash() { }
   explicit ComparableHash(const struct cvmcache_hash &h) : hash(h) { }
@@ -79,14 +71,11 @@ map<uint64_t, Listing> listings;
 
 struct cvmcache_context *ctx;
 
-static int null_getpath(struct cvmcache_hash *id) {
+static int null_getpath(struct cvmcache_hash *id, char *urlbuffer) {
 
   //Build URL
-  strcpy(urlbuffer, rproto);
-  strcat(urlbuffer, domain);
-  strncat(urlbuffer, reinterpret_cast<const char*>(id->digest[0]), 2);
-  strcat(urlbuffer, "/");
-  strncat(urlbuffer, reinterpret_cast<const char*>(id->digest[2]), 17);
+  strcpy(urlbuffer, directory);
+  strcat(urlbuffer, reinterpret_cast<const char*>(id->digest));
 
   return CVMCACHE_STATUS_OK;
 }
@@ -97,8 +86,9 @@ static int null_getpath(struct cvmcache_hash *id) {
   */
 static int null_chrefcnt(struct cvmcache_hash *id, int32_t change_by) {
   ComparableHash h(*id);
+  char *urlbuffer = new char [100];
 
-  null_getpath(id);
+  null_getpath(id, urlbuffer);
 
   if (storage.find(h) == storage.end())
     return CVMCACHE_STATUS_NOENTRY;
@@ -118,6 +108,7 @@ static int null_chrefcnt(struct cvmcache_hash *id, int32_t change_by) {
   }
 
   obj.refcnt += change_by;
+  delete [] urlbuffer;
   return CVMCACHE_STATUS_OK;
 }
 
@@ -151,19 +142,18 @@ static int null_obj_info(
 }
 
 
-/**
-  * Copies the contents of the cache in the buffer (?)
-  */
+// Copies the contents of the cache in the buffer (?)
 static int null_pread(struct cvmcache_hash *id,
                     uint64_t offset,
                     uint32_t *size,
                     unsigned char *buffer)
 {
   struct stat *statbuffer = new struct stat [BUF_SIZE];
+  char *urlbuffer = new char [100];
 
   ComparableHash h(*id);
   int numbytes;
-  null_getpath(id);
+  null_getpath(id, urlbuffer);
 
   if (storage.find(h) == storage.end())
     return CVMCACHE_STATUS_NOENTRY;
@@ -177,6 +167,7 @@ static int null_pread(struct cvmcache_hash *id,
   size_t file_size = statbuffer->st_size;
 
   delete [] statbuffer;
+  delete [] urlbuffer;
   // returns an error if the offset is larget than the file size
   if (offset > lseek(obj.fd, 0, SEEK_END))
     return CVMCACHE_STATUS_OUTOFBOUNDS;
