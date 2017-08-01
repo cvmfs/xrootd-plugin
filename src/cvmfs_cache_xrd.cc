@@ -27,11 +27,12 @@
 #include <sys/stat.h>
 
 #include "libcvmfs_cache.h"
+#include "/home/mdomenighini/local/cvmfs/cvmfs/hash.h"
 // #include "XrdPosix/XrdPosix.hh"
 
 using namespace std;  // NOLINT
 
-#define BUF_SIZE 16386
+#define BUF_SIZE 300
 
 const char *directory = "/var/lib/cvmfs/posix-upper/";
 
@@ -43,6 +44,8 @@ struct Object {
 
 struct TxnInfo {
   struct cvmcache_hash id;
+  string tmp_path = cache_path_ + "/txn/fetchXXXXXX"
+
   Object partial_object;
 };
 
@@ -72,10 +75,14 @@ map<uint64_t, Listing> listings;
 struct cvmcache_context *ctx;
 
 static int null_getpath(struct cvmcache_hash *id, char *urlbuffer) {
+  // shash::Digest<256, kSha1> hash_calc();
+  // shash::Sha1 hash_calc();
+  shash::Digest<20, shash::kSha1> hash_calc(shash::kSha1, id->digest, shash::kSuffixNone);
+  string suffix = hash_calc.MakePath();
 
   //Build URL
   strcpy(urlbuffer, directory);
-  strcat(urlbuffer, reinterpret_cast<const char*>(id->digest));
+  strcat(urlbuffer, suffix.c_str());
 
   return CVMCACHE_STATUS_OK;
 }
@@ -86,12 +93,13 @@ static int null_getpath(struct cvmcache_hash *id, char *urlbuffer) {
   */
 static int null_chrefcnt(struct cvmcache_hash *id, int32_t change_by) {
   ComparableHash h(*id);
-  char *urlbuffer = new char [100];
+  char *urlbuffer = new char [BUF_SIZE];
 
   null_getpath(id, urlbuffer);
 
   if (storage.find(h) == storage.end())
     return CVMCACHE_STATUS_NOENTRY;
+
   Object obj = storage[h];
 
   if (change_by > 0){
@@ -149,7 +157,7 @@ static int null_pread(struct cvmcache_hash *id,
                     unsigned char *buffer)
 {
   struct stat *statbuffer = new struct stat [BUF_SIZE];
-  char *urlbuffer = new char [100];
+  char *urlbuffer = new char [BUF_SIZE];
 
   ComparableHash h(*id);
   int numbytes;
@@ -179,6 +187,93 @@ static int null_pread(struct cvmcache_hash *id,
 
   return CVMCACHE_STATUS_OK;
 }
+
+/**
+  * Starts the transaction, by acquiring the *id and info
+  * to be transferred to the cache. The transactions are then stored in an
+  * array and identified by their id.
+  */
+static int null_start_txn(
+  struct cvmcache_hash *id,
+  uint64_t txn_id)
+{
+  TxnInfo txn;
+  txn.id = *id;
+
+  const unsigned tmp_path_len = txn.tmp_path.length();
+  char template_path[tmp_path_len + 1];
+  memcpy(template_path, &txn.tmp_path[0], tmp_path_len);
+  template_path[temp_path_len] = '\0';
+
+  Object partial_object;
+  partial_object.id = *id;
+  partial_object.refcnt = 1;
+
+  txn.partial_object = partial_object;
+  txn.partial_object.fd = mkstemp(template_path);
+  if (txn.partial_object.fd < 0)
+    return -errno;
+  transactions[txn_id] = txn;
+  return CVMCACHE_STATUS_OK;
+}
+
+/**
+  * Writes the content of the oject to be acquired in the general transactions
+  * array.
+  */
+static int null_write_txn(
+  uint64_t txn_id,
+  unsigned char *buffer,
+  uint32_t size)
+{
+  TxnInfo txn = transactions[txn_id];
+
+  off_t offset = 0;
+  int written;
+  written = pwrite(txn.partial_object.fd, buffer, size, offset)
+  if (written < 0)
+    return -errno;
+  transactions[txn_id] = txn;
+  return CVMCACHE_STATUS_OK;
+}
+
+/**
+  * Writes the transaction content in the cache.
+  * Tre transaction information is then erased from the general transactions
+  * array and from the buffer.
+  */
+static int null_commit_txn(uint64_t txn_id) {
+  int flushed;
+  int update_path;
+
+  TxnInfo txn = transactions[txn_id];
+  ComparableHash h(txn.id);
+  storage[h] = txn.partial_object;
+  flushed = fsync(txn.partial_object,fd);
+  if (flushed <0)
+    return -errno;
+  update_path = rename(  )
+  if (update_path < 0)
+    return -errno;
+  transactions.erase(txn_id);
+  return CVMCACHE_STATUS_OK;
+}
+
+/**
+  * Erases transaction information without committing it to memory.
+  */
+static int null_abort_txn(uint64_t txn_id) {
+  TxnInfo txn = transactions[txn_id];
+  txn.partial_object.fd = close(txn.partial_object.fd)
+  if (txn.partial_object.fd < 0)
+    return -errno;
+  transactions.erase(txn_id);
+  return CVMCACHE_STATUS_OK;
+}
+
+/**
+  * Retrives informations regarding the cache, such as the number of pinned
+  * bites.x
 
 static void Usage(const char *progname) {
   printf("%s <config file>\n", progname);
