@@ -32,9 +32,10 @@
 
 using namespace std;  // NOLINT
 
-#define BUF_SIZE 300
+#define BUF_SIZE 500
 
 const char *directory = "/var/lib/cvmfs/posix-upper/";
+string cache_path_ = "/var/lib/cvmfs/posix-upper";
 
 struct Object {
   struct cvmcache_hash id;
@@ -44,9 +45,8 @@ struct Object {
 
 struct TxnInfo {
   struct cvmcache_hash id;
-  string tmp_path = cache_path_ + "/txn/fetchXXXXXX"
-
   Object partial_object;
+  string path;
 };
 
 // List of elements requested by a client.
@@ -93,6 +93,7 @@ static int null_getpath(struct cvmcache_hash *id, char *urlbuffer) {
   */
 static int null_chrefcnt(struct cvmcache_hash *id, int32_t change_by) {
   ComparableHash h(*id);
+  Object obj;
   char *urlbuffer = new char [BUF_SIZE];
 
   null_getpath(id, urlbuffer);
@@ -100,22 +101,27 @@ static int null_chrefcnt(struct cvmcache_hash *id, int32_t change_by) {
   if (storage.find(h) == storage.end())
     return CVMCACHE_STATUS_NOENTRY;
 
-  Object obj = storage[h];
-
+  obj = storage[h];
   if (change_by > 0){
-    obj.fd = open(urlbuffer, O_RDONLY);
-    if (obj.fd <0)
-      return CVMCACHE_STATUS_BADCOUNT;
+    if ((obj.refcnt + change_by) == 1){
+      obj.fd = open(urlbuffer, O_RDONLY);
+      if (obj.fd <0)
+        return CVMCACHE_STATUS_BADCOUNT;
+      }
   }
 
   //TODO: check the appropriate error to return.
   if (change_by < 0){
-    obj.fd = close(obj.fd);
-    if (obj.fd <0)
-      return CVMCACHE_STATUS_BADCOUNT;
+    if ((obj.refcnt + change_by) == 0){
+      obj.fd = close(obj.fd);
+      if (obj.fd <0)
+        return CVMCACHE_STATUS_BADCOUNT;
+      }
   }
 
   obj.refcnt += change_by;
+  storage[h] = obj;
+
   delete [] urlbuffer;
   return CVMCACHE_STATUS_OK;
 }
@@ -195,24 +201,25 @@ static int null_pread(struct cvmcache_hash *id,
   */
 static int null_start_txn(
   struct cvmcache_hash *id,
-  uint64_t txn_id)
+  uint64_t txn_id,
+  struct cvmcache_object_info *info)
 {
   TxnInfo txn;
-  txn.id = *id;
-
-  const unsigned tmp_path_len = txn.tmp_path.length();
-  char template_path[tmp_path_len + 1];
-  memcpy(template_path, &txn.tmp_path[0], tmp_path_len);
-  template_path[temp_path_len] = '\0';
-
   Object partial_object;
   partial_object.id = *id;
   partial_object.refcnt = 1;
+  string txn_path = cache_path_ + "/txn/fetchXXXXXX";
+  const unsigned txn_path_len = txn_path.length();
+  char template_path[txn_path_len + 1];
+  memcpy(template_path, &txn_path[0], txn_path_len);
+  template_path[txn_path_len] = '\0';
 
-  txn.partial_object = partial_object;
-  txn.partial_object.fd = mkstemp(template_path);
-  if (txn.partial_object.fd < 0)
+  partial_object.fd = mkstemp(template_path);
+  if (partial_object.fd < 0)
     return -errno;
+  txn.id = *id;
+  txn.partial_object = partial_object;
+  txn.path = template_path;
   transactions[txn_id] = txn;
   return CVMCACHE_STATUS_OK;
 }
@@ -227,10 +234,10 @@ static int null_write_txn(
   uint32_t size)
 {
   TxnInfo txn = transactions[txn_id];
-
   off_t offset = 0;
   int written;
-  written = pwrite(txn.partial_object.fd, buffer, size, offset)
+
+  written = pwrite(txn.partial_object.fd, buffer, size, offset);
   if (written < 0)
     return -errno;
   transactions[txn_id] = txn;
@@ -245,17 +252,20 @@ static int null_write_txn(
 static int null_commit_txn(uint64_t txn_id) {
   int flushed;
   int update_path;
-
+  char *urlbuffer = new char [BUF_SIZE];
   TxnInfo txn = transactions[txn_id];
   ComparableHash h(txn.id);
+  null_getpath(&(txn.partial_object.id), urlbuffer);
   storage[h] = txn.partial_object;
-  flushed = fsync(txn.partial_object,fd);
-  if (flushed <0)
+  flushed = fsync(txn.partial_object.fd);
+  if (flushed < 0)
     return -errno;
-  update_path = rename(  )
+  update_path = rename(txn.path.c_str(), urlbuffer);
   if (update_path < 0)
     return -errno;
   transactions.erase(txn_id);
+
+  delete [] urlbuffer;
   return CVMCACHE_STATUS_OK;
 }
 
@@ -264,7 +274,8 @@ static int null_commit_txn(uint64_t txn_id) {
   */
 static int null_abort_txn(uint64_t txn_id) {
   TxnInfo txn = transactions[txn_id];
-  txn.partial_object.fd = close(txn.partial_object.fd)
+  txn.partial_object.refcnt = 0;
+  txn.partial_object.fd = close(txn.partial_object.fd);
   if (txn.partial_object.fd < 0)
     return -errno;
   transactions.erase(txn_id);
@@ -273,8 +284,33 @@ static int null_abort_txn(uint64_t txn_id) {
 
 /**
   * Retrives informations regarding the cache, such as the number of pinned
-  * bites.x
+  * bites.
+  */
+static int null_info(struct cvmcache_info *info) {
+  struct stat *statbuffer = new struct stat [BUF_SIZE];
 
+  info->size_bytes = uint64_t(-1);
+  info->used_bytes = info->pinned_bytes = 0;
+  for (map<ComparableHash, Object>::const_iterator i = storage.begin(),
+       i_end = storage.end(); i != i_end; ++i)
+  {
+    if (fstat(i->second.fd, statbuffer))
+      return -errno;
+    info->used_bytes += statbuffer->st_size;
+    // only count the bytes which are being referenced
+    if (i->second.refcnt > 0)
+      info->pinned_bytes = info->used_bytes;
+  }
+  info->no_shrink = 0;
+  delete [] statbuffer;
+  return CVMCACHE_STATUS_OK;
+}
+
+
+/**
+  * Retrives informations regarding the cache, such as the number of pinned
+  * bites.x
+  */
 static void Usage(const char *progname) {
   printf("%s <config file>\n", progname);
 }
@@ -307,7 +343,12 @@ int main(int argc, char **argv) {
   callbacks.cvmcache_chrefcnt = null_chrefcnt;
   callbacks.cvmcache_obj_info = null_obj_info;
   callbacks.cvmcache_pread = null_pread;
-  callbacks.capabilities = CVMCACHE_CAP_NONE;
+  callbacks.cvmcache_start_txn = null_start_txn;
+  callbacks.cvmcache_write_txn = null_write_txn;
+  callbacks.cvmcache_commit_txn = null_commit_txn;
+  callbacks.cvmcache_abort_txn = null_abort_txn;
+  callbacks.cvmcache_info = null_info;
+  callbacks.capabilities = CVMCACHE_CAP_WRITE;
 
 
   ctx = cvmcache_init(&callbacks);
