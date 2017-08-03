@@ -40,7 +40,9 @@ string cache_path_ = "/var/lib/cvmfs/posix-upper";
 struct Object {
   struct cvmcache_hash id;
   int fd;
+  cvmcache_object_type type;
   int32_t refcnt;
+  string description;
 };
 
 struct TxnInfo {
@@ -146,9 +148,12 @@ static int null_obj_info(
   if (obj.refcnt <= 0)
     return CVMCACHE_STATUS_BADCOUNT;
 
-  if (!(fstat(obj.fd, statbuffer)))
-    info->size=statbuffer->st_size;
-  else
+  if (!(fstat(obj.fd, statbuffer))){
+    info->size = statbuffer->st_size;
+    info->type = obj.type;
+    info->pinned = obj.refcnt > 0;
+    info->description = strdup(obj.description.c_str());
+  }else
     return -errno;
 
   delete [] statbuffer;
@@ -208,6 +213,8 @@ static int null_start_txn(
   Object partial_object;
   partial_object.id = *id;
   partial_object.refcnt = 1;
+  if (info->description != NULL)
+    partial_object.description = string(info->description);
   string txn_path = cache_path_ + "/txn/fetchXXXXXX";
   const unsigned txn_path_len = txn_path.length();
   char template_path[txn_path_len + 1];
@@ -307,6 +314,112 @@ static int null_info(struct cvmcache_info *info) {
 }
 
 
+static int null_shrink(uint64_t shrink_to, uint64_t *used) {
+  struct cvmcache_info info;
+  struct stat *statbuffer = new struct stat [BUF_SIZE];
+  null_info(&info);
+  *used = info.used_bytes;
+  if (info.used_bytes <= shrink_to)
+    return CVMCACHE_STATUS_OK;
+
+  // Volatile objects
+  for (map<ComparableHash, Object>::iterator i = storage.begin(),
+       i_end = storage.end(); i != i_end; )
+  {
+    if ((i->second.refcnt > 0) || (i->second.type != CVMCACHE_OBJECT_VOLATILE))
+    {
+      ++i;
+      continue;
+    }
+    if (fstat(i->second.fd, statbuffer) < 0)
+     return -errno;
+    unsigned length = statbuffer->st_size;
+    map<ComparableHash, Object>::iterator delete_me = i++;
+    storage.erase(delete_me);
+    info.used_bytes -= length;
+    if (info.used_bytes <= shrink_to) {
+      *used = info.used_bytes;
+      return CVMCACHE_STATUS_OK;
+    }
+  }
+  // All other objects
+  for (map<ComparableHash, Object>::iterator i = storage.begin(),
+       i_end = storage.end(); i != i_end; )
+  {
+    if (i->second.refcnt > 0) {
+      ++i;
+      continue;
+    }
+    if (fstat(i->second.fd, statbuffer) < 0)
+     return -errno;
+    unsigned length = statbuffer->st_size;
+    map<ComparableHash, Object>::iterator delete_me = i++;
+    storage.erase(delete_me);
+    info.used_bytes -= length;
+    if (info.used_bytes <= shrink_to) {
+      *used = info.used_bytes;
+      return CVMCACHE_STATUS_OK;
+    }
+  }
+
+  *used = info.used_bytes;
+  delete [] statbuffer;
+  return CVMCACHE_STATUS_PARTIAL;
+}
+
+static int null_listing_begin(
+  uint64_t lst_id,
+  enum cvmcache_object_type type)
+{
+  Listing lst;
+  lst.type = type;
+  lst.elems = new vector<Object>();
+  for (map<ComparableHash, Object>::const_iterator i = storage.begin(),
+       i_end = storage.end(); i != i_end; ++i)
+  {
+    lst.elems->push_back(i->second);
+  }
+  listings[lst_id] = lst;
+  return CVMCACHE_STATUS_OK;
+}
+
+static int null_listing_next(
+  int64_t listing_id,
+  struct cvmcache_object_info *item)
+{
+  Listing lst = listings[listing_id];
+  struct stat *statbuffer = new struct stat [BUF_SIZE];
+  do {
+    if (lst.pos >= lst.elems->size())
+      return CVMCACHE_STATUS_OUTOFBOUNDS;
+
+    vector<Object> *elems = lst.elems;
+    if ((*elems)[lst.pos].type == lst.type) {
+      item->id = (*elems)[lst.pos].id;
+      if (fstat((*elems)[lst.pos].fd, statbuffer) < 0)
+       return -errno;
+      item->size = statbuffer->st_size;
+      item->type = (*elems)[lst.pos].type;
+      item->pinned = (*elems)[lst.pos].refcnt > 0;
+      item->description = (*elems)[lst.pos].description.empty()
+                          ? NULL
+                          : strdup((*elems)[lst.pos].description.c_str());
+      break;
+    }
+    lst.pos++;
+  } while (true);
+  lst.pos++;
+  listings[listing_id] = lst;
+  delete [] statbuffer;
+  return CVMCACHE_STATUS_OK;
+}
+
+static int null_listing_end(int64_t listing_id) {
+  delete listings[listing_id].elems;
+  listings.erase(listing_id);
+  return CVMCACHE_STATUS_OK;
+}
+
 /**
   * Retrives informations regarding the cache, such as the number of pinned
   * bites.x
@@ -348,7 +461,11 @@ int main(int argc, char **argv) {
   callbacks.cvmcache_commit_txn = null_commit_txn;
   callbacks.cvmcache_abort_txn = null_abort_txn;
   callbacks.cvmcache_info = null_info;
-  callbacks.capabilities = CVMCACHE_CAP_WRITE;
+  callbacks.cvmcache_shrink = null_shrink;
+  callbacks.cvmcache_listing_begin = null_listing_begin;
+  callbacks.cvmcache_listing_next = null_listing_next;
+  callbacks.cvmcache_listing_end = null_listing_end;
+  callbacks.capabilities = CVMCACHE_CAP_ALL_V1;
 
 
   ctx = cvmcache_init(&callbacks);
