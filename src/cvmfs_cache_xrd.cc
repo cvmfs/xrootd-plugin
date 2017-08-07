@@ -27,7 +27,7 @@
 #include <sys/stat.h>
 
 #include "libcvmfs_cache.h"
-#include "/home/mdomenighini/local/cvmfs/cvmfs/hash.h"
+#include "hash.h"
 // #include "XrdPosix/XrdPosix.hh"
 
 using namespace std;  // NOLINT
