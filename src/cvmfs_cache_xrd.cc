@@ -76,15 +76,14 @@ map<uint64_t, Listing> listings;
 
 struct cvmcache_context *ctx;
 
-static int null_getpath(struct cvmcache_hash *id, char *urlbuffer) {
+static int null_getpath(struct cvmcache_hash *id, std::string *urlpath) {
   // shash::Digest<256, kSha1> hash_calc();
   // shash::Sha1 hash_calc();
   shash::Digest<20, shash::kSha1> hash_calc(shash::kSha1, id->digest, shash::kSuffixNone);
   string suffix = hash_calc.MakePath();
 
   //Build URL
-  strcpy(urlbuffer, directory);
-  strcat(urlbuffer, suffix.c_str());
+  *urlpath = string(directory) + suffix;
 
   return CVMCACHE_STATUS_OK;
 }
@@ -96,9 +95,9 @@ static int null_getpath(struct cvmcache_hash *id, char *urlbuffer) {
 static int null_chrefcnt(struct cvmcache_hash *id, int32_t change_by) {
   ComparableHash h(*id);
   Object obj;
-  char *urlbuffer = new char [BUF_SIZE];
+  string urlpath;
 
-  null_getpath(id, urlbuffer);
+  null_getpath(id, &urlpath);
 
   if (storage.find(h) == storage.end())
     return CVMCACHE_STATUS_NOENTRY;
@@ -106,7 +105,7 @@ static int null_chrefcnt(struct cvmcache_hash *id, int32_t change_by) {
   obj = storage[h];
   if (change_by > 0){
     if ((obj.refcnt + change_by) == 1){
-      obj.fd = open(urlbuffer, O_RDONLY);
+      obj.fd = open((&urlpath)->c_str(), O_RDONLY);
       if (obj.fd <0)
         return CVMCACHE_STATUS_BADCOUNT;
       }
@@ -124,7 +123,6 @@ static int null_chrefcnt(struct cvmcache_hash *id, int32_t change_by) {
   obj.refcnt += change_by;
   storage[h] = obj;
 
-  delete [] urlbuffer;
   return CVMCACHE_STATUS_OK;
 }
 
@@ -137,7 +135,7 @@ static int null_obj_info(
   struct cvmcache_hash *id,
   struct cvmcache_object_info *info)
 {
-  struct stat *statbuffer = new struct stat [BUF_SIZE];
+  struct stat statbuffer;
   ComparableHash h(*id);
   if (storage.find(h) == storage.end())
     return CVMCACHE_STATUS_NOENTRY;
@@ -148,15 +146,14 @@ static int null_obj_info(
   if (obj.refcnt <= 0)
     return CVMCACHE_STATUS_BADCOUNT;
 
-  if (!(fstat(obj.fd, statbuffer))){
-    info->size = statbuffer->st_size;
+  if (!(fstat(obj.fd, &statbuffer))){
+    info->size = statbuffer.st_size;
     info->type = obj.type;
     info->pinned = obj.refcnt > 0;
     info->description = strdup(obj.description.c_str());
   }else
     return -errno;
 
-  delete [] statbuffer;
   return CVMCACHE_STATUS_OK;
 }
 
@@ -167,12 +164,7 @@ static int null_pread(struct cvmcache_hash *id,
                     uint32_t *size,
                     unsigned char *buffer)
 {
-  struct stat *statbuffer = new struct stat [BUF_SIZE];
-  char *urlbuffer = new char [BUF_SIZE];
-
   ComparableHash h(*id);
-  int numbytes;
-  null_getpath(id, urlbuffer);
 
   if (storage.find(h) == storage.end())
     return CVMCACHE_STATUS_NOENTRY;
@@ -181,20 +173,15 @@ static int null_pread(struct cvmcache_hash *id,
   if (obj.fd < 0)
     return CVMCACHE_STATUS_NOENTRY;
 
-  if (fstat(obj.fd, statbuffer))
-    return -errno;
-  size_t file_size = statbuffer->st_size;
-
-  delete [] statbuffer;
-  delete [] urlbuffer;
   // returns an error if the offset is larget than the file size
   if (offset > lseek(obj.fd, 0, SEEK_END))
     return CVMCACHE_STATUS_OUTOFBOUNDS;
 
   //number of bytes the data occupies
-  numbytes = pread(obj.fd, buffer, file_size, offset);
+  int numbytes = pread(obj.fd, buffer, *size, offset);
   if (numbytes < 0)
-    return -errno;
+    return CVMCACHE_STATUS_IOERR;
+  *size = numbytes;
 
   return CVMCACHE_STATUS_OK;
 }
@@ -259,20 +246,19 @@ static int null_write_txn(
 static int null_commit_txn(uint64_t txn_id) {
   int flushed;
   int update_path;
-  char *urlbuffer = new char [BUF_SIZE];
+  string urlpath;
   TxnInfo txn = transactions[txn_id];
   ComparableHash h(txn.id);
-  null_getpath(&(txn.partial_object.id), urlbuffer);
+  null_getpath(&(txn.partial_object.id), &urlpath);
   storage[h] = txn.partial_object;
   flushed = fsync(txn.partial_object.fd);
   if (flushed < 0)
     return -errno;
-  update_path = rename(txn.path.c_str(), urlbuffer);
+  update_path = rename(txn.path.c_str(), (&urlpath)->c_str());
   if (update_path < 0)
     return -errno;
   transactions.erase(txn_id);
 
-  delete [] urlbuffer;
   return CVMCACHE_STATUS_OK;
 }
 
@@ -448,8 +434,10 @@ int main(int argc, char **argv) {
     cvmcache_options_fini(options);
     return 1;
   }
+  char *test_mode = cvmcache_options_get(options, "CVMFS_CACHE_PLUGIN_TEST");
 
-  cvmcache_spawn_watchdog(NULL);
+  if (!test_mode)
+    cvmcache_spawn_watchdog(NULL);
 
   struct cvmcache_callbacks callbacks;
   memset(&callbacks, 0, sizeof(callbacks));
@@ -467,18 +455,22 @@ int main(int argc, char **argv) {
   callbacks.cvmcache_listing_end = null_listing_end;
   callbacks.capabilities = CVMCACHE_CAP_ALL_V1;
 
-
   ctx = cvmcache_init(&callbacks);
   int retval = cvmcache_listen(ctx, locator);
   if (!retval) {
     fprintf(stderr, "failed to listen on %s\n", locator);
     return 1;
   }
+
+
   printf("Listening for cvmfs clients on %s\n", locator);
   printf("NOTE: this process needs to run as user cvmfs\n\n");
 
   // Starts the I/O processing thread
   cvmcache_process_requests(ctx, 0);
+
+  if (test_mode)
+    while (true) sleep(1);
 
   if (!cvmcache_is_supervised()) {
     printf("Press <R ENTER> to ask clients to release nested catalogs\n");
