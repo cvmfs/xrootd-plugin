@@ -11,7 +11,7 @@ message ("Running CMake version ${CMAKE_VERSION}")
 #
 # set the path where cmake looks for additional modules
 #
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/" ${PROJECT_SOURCE_DIR}/src ${PROJECT_SOURCE_DIR}/cmake )
 
 #
 # detect the operating system and the distribution we are compiling on

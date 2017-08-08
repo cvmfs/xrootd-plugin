@@ -26,9 +26,9 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
+#include "XrdPosix/XrdPosix.hh"
 #include "libcvmfs_cache.h"
-#include "/home/mdomenighini/local/cvmfs/cvmfs/hash.h"
-// #include "XrdPosix/XrdPosix.hh"
+#include "hash.h"
 
 using namespace std;  // NOLINT
 
@@ -278,8 +278,6 @@ static int null_abort_txn(uint64_t txn_id) {
   * bites.
   */
 static int null_info(struct cvmcache_info *info) {
-  struct stat statbuffer;
-
   info->size_bytes = uint64_t(-1);
   info->used_bytes = info->pinned_bytes = 0;
   for (map<ComparableHash, Object>::const_iterator i = storage.begin(),
