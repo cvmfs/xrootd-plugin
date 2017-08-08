@@ -27,22 +27,22 @@
 #include <sys/stat.h>
 
 #include "libcvmfs_cache.h"
-#include "hash.h"
+#include "/home/mdomenighini/local/cvmfs/cvmfs/hash.h"
 // #include "XrdPosix/XrdPosix.hh"
 
 using namespace std;  // NOLINT
 
-#define BUF_SIZE 500
-
 const char *directory = "/var/lib/cvmfs/posix-upper/";
-string cache_path_ = "/var/lib/cvmfs/posix-upper";
 
 struct Object {
   struct cvmcache_hash id;
   int fd;
   cvmcache_object_type type;
+  int32_t size_data = 0;
   int32_t refcnt;
+  int32_t neg_nbytes_written;
   string description;
+
 };
 
 struct TxnInfo {
@@ -53,7 +53,7 @@ struct TxnInfo {
 
 // List of elements requested by a client.
 struct Listing {
-  Listing() : pos(0) { }
+  Listing() : type(CVMCACHE_OBJECT_REGULAR), pos(0), elems(NULL) { }
   cvmcache_object_type type;
   uint64_t pos;
   vector<Object> *elems;
@@ -94,18 +94,17 @@ static int null_getpath(struct cvmcache_hash *id, std::string *urlpath) {
   */
 static int null_chrefcnt(struct cvmcache_hash *id, int32_t change_by) {
   ComparableHash h(*id);
-  Object obj;
-  string urlpath;
-
-  null_getpath(id, &urlpath);
 
   if (storage.find(h) == storage.end())
     return CVMCACHE_STATUS_NOENTRY;
 
-  obj = storage[h];
+  string urlpath;
+  null_getpath(id, &urlpath);
+
+  Object obj = storage[h];
   if (change_by > 0){
     if ((obj.refcnt + change_by) == 1){
-      obj.fd = open((&urlpath)->c_str(), O_RDONLY);
+      obj.fd = open(urlpath.c_str(), O_RDONLY);
       if (obj.fd <0)
         return CVMCACHE_STATUS_BADCOUNT;
       }
@@ -142,17 +141,13 @@ static int null_obj_info(
 
   Object obj = storage[h];
 
-  //TODO: check if I should open the object or not
-  if (obj.refcnt <= 0)
-    return CVMCACHE_STATUS_BADCOUNT;
-
   if (!(fstat(obj.fd, &statbuffer))){
     info->size = statbuffer.st_size;
     info->type = obj.type;
     info->pinned = obj.refcnt > 0;
     info->description = strdup(obj.description.c_str());
   }else
-    return -errno;
+    return CVMCACHE_STATUS_NOENTRY;
 
   return CVMCACHE_STATUS_OK;
 }
@@ -165,9 +160,6 @@ static int null_pread(struct cvmcache_hash *id,
                     unsigned char *buffer)
 {
   ComparableHash h(*id);
-
-  if (storage.find(h) == storage.end())
-    return CVMCACHE_STATUS_NOENTRY;
 
   Object obj = storage[h];
   if (obj.fd < 0)
@@ -199,14 +191,16 @@ static int null_start_txn(
   TxnInfo txn;
   Object partial_object;
   partial_object.id = *id;
+  partial_object.type = info->type;
   partial_object.refcnt = 1;
+  if (info->size != CVMCACHE_SIZE_UNKNOWN)
+    partial_object.size_data = info->size;
   if (info->description != NULL)
     partial_object.description = string(info->description);
-  string txn_path = cache_path_ + "/txn/fetchXXXXXX";
+  string txn_path = string(directory) + "/txn/fetchXXXXXX";
   const unsigned txn_path_len = txn_path.length();
   char template_path[txn_path_len + 1];
   memcpy(template_path, &txn_path[0], txn_path_len);
-  template_path[txn_path_len] = '\0';
 
   partial_object.fd = mkstemp(template_path);
   if (partial_object.fd < 0)
@@ -228,12 +222,16 @@ static int null_write_txn(
   uint32_t size)
 {
   TxnInfo txn = transactions[txn_id];
-  off_t offset = 0;
   int written;
 
+  if (txn.partial_object.neg_nbytes_written > 0)
+    txn.partial_object.neg_nbytes_written = 0;
+
+  off_t offset = -txn.partial_object.neg_nbytes_written;
   written = pwrite(txn.partial_object.fd, buffer, size, offset);
   if (written < 0)
     return -errno;
+  txn.partial_object.neg_nbytes_written -= size;
   transactions[txn_id] = txn;
   return CVMCACHE_STATUS_OK;
 }
@@ -280,32 +278,28 @@ static int null_abort_txn(uint64_t txn_id) {
   * bites.
   */
 static int null_info(struct cvmcache_info *info) {
-  struct stat *statbuffer = new struct stat [BUF_SIZE];
+  struct stat statbuffer;
 
   info->size_bytes = uint64_t(-1);
   info->used_bytes = info->pinned_bytes = 0;
   for (map<ComparableHash, Object>::const_iterator i = storage.begin(),
        i_end = storage.end(); i != i_end; ++i)
   {
-    if (fstat(i->second.fd, statbuffer))
-      return -errno;
-    info->used_bytes += statbuffer->st_size;
+    info->used_bytes += i->second.size_data;
     // only count the bytes which are being referenced
     if (i->second.refcnt > 0)
       info->pinned_bytes = info->used_bytes;
   }
   info->no_shrink = 0;
-  delete [] statbuffer;
   return CVMCACHE_STATUS_OK;
 }
 
 
 static int null_shrink(uint64_t shrink_to, uint64_t *used) {
   struct cvmcache_info info;
-  struct stat *statbuffer = new struct stat [BUF_SIZE];
   null_info(&info);
   *used = info.used_bytes;
-  if (info.used_bytes <= shrink_to)
+  if (*used <= shrink_to)
     return CVMCACHE_STATUS_OK;
 
   // Volatile objects
@@ -317,9 +311,8 @@ static int null_shrink(uint64_t shrink_to, uint64_t *used) {
       ++i;
       continue;
     }
-    if (fstat(i->second.fd, statbuffer) < 0)
-     return -errno;
-    unsigned length = statbuffer->st_size;
+
+    unsigned length = i->second.size_data;
     map<ComparableHash, Object>::iterator delete_me = i++;
     storage.erase(delete_me);
     info.used_bytes -= length;
@@ -336,9 +329,7 @@ static int null_shrink(uint64_t shrink_to, uint64_t *used) {
       ++i;
       continue;
     }
-    if (fstat(i->second.fd, statbuffer) < 0)
-     return -errno;
-    unsigned length = statbuffer->st_size;
+    unsigned length = i->second.size_data;
     map<ComparableHash, Object>::iterator delete_me = i++;
     storage.erase(delete_me);
     info.used_bytes -= length;
@@ -349,7 +340,6 @@ static int null_shrink(uint64_t shrink_to, uint64_t *used) {
   }
 
   *used = info.used_bytes;
-  delete [] statbuffer;
   return CVMCACHE_STATUS_PARTIAL;
 }
 
@@ -374,7 +364,6 @@ static int null_listing_next(
   struct cvmcache_object_info *item)
 {
   Listing lst = listings[listing_id];
-  struct stat *statbuffer = new struct stat [BUF_SIZE];
   do {
     if (lst.pos >= lst.elems->size())
       return CVMCACHE_STATUS_OUTOFBOUNDS;
@@ -382,9 +371,7 @@ static int null_listing_next(
     vector<Object> *elems = lst.elems;
     if ((*elems)[lst.pos].type == lst.type) {
       item->id = (*elems)[lst.pos].id;
-      if (fstat((*elems)[lst.pos].fd, statbuffer) < 0)
-       return -errno;
-      item->size = statbuffer->st_size;
+      item->size = (*elems)[lst.pos].size_data;
       item->type = (*elems)[lst.pos].type;
       item->pinned = (*elems)[lst.pos].refcnt > 0;
       item->description = (*elems)[lst.pos].description.empty()
@@ -396,7 +383,6 @@ static int null_listing_next(
   } while (true);
   lst.pos++;
   listings[listing_id] = lst;
-  delete [] statbuffer;
   return CVMCACHE_STATUS_OK;
 }
 
@@ -416,6 +402,7 @@ static void Usage(const char *progname) {
 
 
 int main(int argc, char **argv) {
+
   if (argc < 2) {
     Usage(argv[0]);
     return 1;
@@ -434,10 +421,8 @@ int main(int argc, char **argv) {
     cvmcache_options_fini(options);
     return 1;
   }
-  char *test_mode = cvmcache_options_get(options, "CVMFS_CACHE_PLUGIN_TEST");
 
-  if (!test_mode)
-    cvmcache_spawn_watchdog(NULL);
+  cvmcache_spawn_watchdog(NULL);
 
   struct cvmcache_callbacks callbacks;
   memset(&callbacks, 0, sizeof(callbacks));
@@ -455,38 +440,18 @@ int main(int argc, char **argv) {
   callbacks.cvmcache_listing_end = null_listing_end;
   callbacks.capabilities = CVMCACHE_CAP_ALL_V1;
 
+
   ctx = cvmcache_init(&callbacks);
   int retval = cvmcache_listen(ctx, locator);
   if (!retval) {
     fprintf(stderr, "failed to listen on %s\n", locator);
     return 1;
   }
-
-
   printf("Listening for cvmfs clients on %s\n", locator);
   printf("NOTE: this process needs to run as user cvmfs\n\n");
 
   // Starts the I/O processing thread
   cvmcache_process_requests(ctx, 0);
-
-  if (test_mode)
-    while (true) sleep(1);
-
-  if (!cvmcache_is_supervised()) {
-    printf("Press <R ENTER> to ask clients to release nested catalogs\n");
-    printf("Press <Ctrl+D> to quit\n");
-    while (true) {
-      char buf;
-      int retval = read(fileno(stdin), &buf, 1);
-      if (retval != 1)
-        break;
-      if (buf == 'R') {
-        printf("  ... asking clients to release nested catalogs\n");
-        cvmcache_ask_detach(ctx);
-      }
-    }
-    cvmcache_terminate(ctx);
-  }
 
   cvmcache_wait_for(ctx);
   printf("  ... good bye\n");
