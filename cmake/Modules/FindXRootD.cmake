@@ -23,6 +23,23 @@ if (XROOTD_INCLUDE_DIR)
 endif()
 
 if (XROOTD_FOUND)
+  FIND_LIBRARY(XROOTD_XrdPosix_LIBRARY
+    NAME XrdPosix
+    HINTS
+    ${XROOTD_DIR}
+    $ENV{XROOTD_DIR}
+    /usr
+    /opt/xrootd/
+    PATH_SUFFIXES lib
+    PATH_SUFFIXES lib64
+  )
+  if (XROOTD_XrdPosix_LIBRARY)
+     list(APPEND XROOTD_LIBRARIES_NOOP ${XROOTD_XrdPosix_LIBRARY})
+  else ()
+     message(STATUS "             libXrdPosix not found!")
+     SET(XROOTD_FOUND FALSE)
+  endif ()
+
   FIND_LIBRARY(XROOTD_XrdPosixPreload_LIBRARY
     NAME XrdPosixPreload
     HINTS

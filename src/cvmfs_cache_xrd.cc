@@ -32,7 +32,7 @@
 
 using namespace std;  // NOLINT
 
-const char *directory = "/var/lib/cvmfs/posix-upper/";
+const char *directory = "root://localhost:1094//var/lib/cvmfs/posix-upper";
 
 struct Object {
   struct cvmcache_hash id;
@@ -40,7 +40,7 @@ struct Object {
   cvmcache_object_type type;
   int32_t size_data = 0;
   int32_t refcnt;
-  int32_t neg_nbytes_written;
+  int32_t neg_nbytes_written = 0;
   string description;
 
 };
@@ -77,13 +77,20 @@ map<uint64_t, Listing> listings;
 struct cvmcache_context *ctx;
 
 static int null_getpath(struct cvmcache_hash *id, std::string *urlpath) {
-  // shash::Digest<256, kSha1> hash_calc();
-  // shash::Sha1 hash_calc();
   shash::Digest<20, shash::kSha1> hash_calc(shash::kSha1, id->digest, shash::kSuffixNone);
   string suffix = hash_calc.MakePath();
 
   //Build URL
   *urlpath = string(directory) + suffix;
+
+  return CVMCACHE_STATUS_OK;
+}
+
+static int null_create_tmp(Object partial_object, string *tmp_path) {
+  char *char_path = tmpnam(const_cast<char*>(tmp_path->c_str()));
+  string string_path(char_path);
+  *tmp_path = string(directory) + char_path;
+  partial_object.fd = open(tmp_path->c_str(), O_CREAT | O_EXCL);
 
   return CVMCACHE_STATUS_OK;
 }
@@ -124,7 +131,6 @@ static int null_chrefcnt(struct cvmcache_hash *id, int32_t change_by) {
 
   return CVMCACHE_STATUS_OK;
 }
-
 
 /**
   * Retrieves object information from the hash.
@@ -188,6 +194,7 @@ static int null_start_txn(
   uint64_t txn_id,
   struct cvmcache_object_info *info)
 {
+  string tmp_path;
   TxnInfo txn;
   Object partial_object;
   partial_object.id = *id;
@@ -197,17 +204,19 @@ static int null_start_txn(
     partial_object.size_data = info->size;
   if (info->description != NULL)
     partial_object.description = string(info->description);
-  string txn_path = string(directory) + "/txn/fetchXXXXXX";
-  const unsigned txn_path_len = txn_path.length();
-  char template_path[txn_path_len + 1];
-  memcpy(template_path, &txn_path[0], txn_path_len);
+  // string txn_path = string(directory) + "/txn/fetchXXXXXX";
+  // const unsigned txn_path_len = txn_path.length();
+  // char template_path[txn_path_len + 1];
+  // memcpy(template_path, &txn_path[0], txn_path_len);
+  //
+  // partial_object.fd = mkstemp(template_path);
 
-  partial_object.fd = mkstemp(template_path);
+  null_create_tmp(partial_object, &tmp_path);
   if (partial_object.fd < 0)
     return -errno;
   txn.id = *id;
   txn.partial_object = partial_object;
-  txn.path = template_path;
+  txn.path = tmp_path;
   transactions[txn_id] = txn;
   return CVMCACHE_STATUS_OK;
 }
