@@ -32,7 +32,7 @@
 
 using namespace std;  // NOLINT
 
-char *g_directory = "root://localhost:1094//var/lib/cvmfs/posix-upper/";
+char *g_directory = "/var/lib/cvmfs/posix-upper/";
 
 struct Object {
   struct cvmcache_hash id;
@@ -428,6 +428,14 @@ int main(int argc, char **argv) {
     cvmcache_options_fini(options);
     return 1;
   }
+  const char *hostpath = cvmcache_options_get(options, "CVMFS_CACHE_XRD_HOST");
+  if (hostpath == NULL) {
+    printf("CVMFS_CACHE_XRD_HOST missing\n");
+    cvmcache_options_fini(options);
+    return 1;
+  }
+  string full_env = string(hostpath) + string(g_directory);
+  g_directory = const_cast<char*>(full_env.c_str());
 
   cvmcache_spawn_watchdog(NULL);
 
