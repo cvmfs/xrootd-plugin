@@ -32,7 +32,7 @@
 
 using namespace std;  // NOLINT
 
-const char *directory = "root://localhost:1094//var/lib/cvmfs/posix-upper";
+char *g_directory = "root://localhost:1094//var/lib/cvmfs/posix-upper/";
 
 struct Object {
   struct cvmcache_hash id;
@@ -81,17 +81,18 @@ static int null_getpath(struct cvmcache_hash *id, std::string *urlpath) {
   string suffix = hash_calc.MakePath();
 
   //Build URL
-  *urlpath = string(directory) + suffix;
+  *urlpath = string(g_directory) + suffix;
 
   return CVMCACHE_STATUS_OK;
 }
 
-static int null_create_tmp(Object partial_object, string *tmp_path) {
+static int null_create_tmp(Object& partial_object, string *tmp_path) {
   char *char_path = tmpnam(const_cast<char*>(tmp_path->c_str()));
   string string_path(char_path);
-  *tmp_path = string(directory) + char_path;
+  *tmp_path = string(g_directory) + char_path;
   partial_object.fd = open(tmp_path->c_str(), O_CREAT | O_EXCL);
-
+  if (partial_object.fd <0)
+    return CVMCACHE_STATUS_BADCOUNT;
   return CVMCACHE_STATUS_OK;
 }
 
@@ -204,7 +205,7 @@ static int null_start_txn(
     partial_object.size_data = info->size;
   if (info->description != NULL)
     partial_object.description = string(info->description);
-  // string txn_path = string(directory) + "/txn/fetchXXXXXX";
+  // string txn_path = string(g_directory) + "/txn/fetchXXXXXX";
   // const unsigned txn_path_len = txn_path.length();
   // char template_path[txn_path_len + 1];
   // memcpy(template_path, &txn_path[0], txn_path_len);
@@ -295,7 +296,7 @@ static int null_info(struct cvmcache_info *info) {
     info->used_bytes += i->second.size_data;
     // only count the bytes which are being referenced
     if (i->second.refcnt > 0)
-      info->pinned_bytes = info->used_bytes;
+      info->pinned_bytes += i->second.size_data;
   }
   info->no_shrink = 0;
   return CVMCACHE_STATUS_OK;
@@ -409,7 +410,6 @@ static void Usage(const char *progname) {
 
 
 int main(int argc, char **argv) {
-
   if (argc < 2) {
     Usage(argv[0]);
     return 1;
