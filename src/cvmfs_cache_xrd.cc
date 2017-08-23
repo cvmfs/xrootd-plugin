@@ -258,13 +258,16 @@ static int null_commit_txn(uint64_t txn_id) {
   TxnInfo txn = transactions[txn_id];
   ComparableHash h(txn.id);
   null_getpath(&(txn.partial_object.id), &urlpath);
-  storage[h] = txn.partial_object;
-  flushed = fsync(txn.partial_object.fd);
+  flushed = close(txn.partial_object.fd);
   if (flushed < 0)
     return -errno;
   update_path = rename(txn.path.c_str(), (&urlpath)->c_str());
   if (update_path < 0)
     return -errno;
+  txn.partial_object.fd = open((&urlpath)->c_str(), O_RDONLY);
+  if (txn.partial_object.fd <0)
+    return -errno;
+  storage[h] = txn.partial_object;
   transactions.erase(txn_id);
 
   return CVMCACHE_STATUS_OK;
