@@ -103,17 +103,24 @@ static int null_create_tmp(Object& partial_object, string *tmp_path) {
 static int null_chrefcnt(struct cvmcache_hash *id, int32_t change_by) {
   ComparableHash h(*id);
 
-  if (storage.find(h) == storage.end())
-    return CVMCACHE_STATUS_NOENTRY;
-
   string urlpath;
   null_getpath(id, &urlpath);
+
+  if (storage.find(h) == storage.end()) {
+    Object obj;
+    obj.fd = open(urlpath.c_str(), O_RDONLY);
+    if (obj.fd < 0)
+      return CVMCACHE_STATUS_NOENTRY;
+    obj.refcnt = 1;
+    storage[h] = obj;
+    return CVMCACHE_STATUS_OK;
+  }
 
   Object obj = storage[h];
   if (change_by > 0){
     if ((obj.refcnt + change_by) == 1){
       obj.fd = open(urlpath.c_str(), O_RDONLY);
-      if (obj.fd <0)
+      if (obj.fd < 0)
         return CVMCACHE_STATUS_BADCOUNT;
       }
   }
@@ -121,10 +128,12 @@ static int null_chrefcnt(struct cvmcache_hash *id, int32_t change_by) {
   //TODO: check the appropriate error to return.
   if (change_by < 0){
     if ((obj.refcnt + change_by) == 0){
-      obj.fd = close(obj.fd);
-      if (obj.fd <0)
+      int rc = close(obj.fd);
+      if (rc <0){
+        obj.fd = -1;
         return CVMCACHE_STATUS_BADCOUNT;
       }
+    }
   }
 
   obj.refcnt += change_by;
