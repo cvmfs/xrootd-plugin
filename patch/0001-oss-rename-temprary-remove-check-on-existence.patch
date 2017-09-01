@@ -1,0 +1,27 @@
+From 03998254e8c0c173c79cb26569439fa16f4b7f3e Mon Sep 17 00:00:00 2001
+From: Gerardo Ganis <Gerardo.Ganis@cern.ch>
+Date: Tue, 15 Aug 2017 11:40:18 +0200
+Subject: [PATCH] oss::rename: temprary remove check on existence
+
+---
+ src/XrdOss/XrdOssRename.cc | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/src/XrdOss/XrdOssRename.cc b/src/XrdOss/XrdOssRename.cc
+index 1aea05b..0022355 100644
+--- a/src/XrdOss/XrdOssRename.cc
++++ b/src/XrdOss/XrdOssRename.cc
+@@ -112,8 +112,10 @@ int XrdOssSys::Rename(const char *oldname, const char *newname,
+ 
+ // Make sure that the target file does not exist
+ //
++#if 0
+    retc2 = lstat(local_path_New, &statbuff);
+    if (!retc2) return -EEXIST;
++#endif
+ 
+ // We need to create the directory path if it does not exist.
+ //
+-- 
+2.7.4
+
