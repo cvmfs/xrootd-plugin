@@ -1,0 +1,49 @@
+#ifndef ___CVMFS_CACHE_XRD_VERS_H___
+#define ___CVMFS_CACHE_XRD_VERS_H___
+/******************************************************************************/
+/*                                                                            */
+/*                C v m f s C a c h e X r d V e r s. h h                      */
+/*                                                                            */
+/*  (C) 2018 CERN                                                  */
+/*                                                                            */
+/*  All rights reserved. The copyright holder's institutional names may not   */
+/*  be used to endorse or promote products derived from this software without */
+/*  specific prior written permission.                                        */
+/*                                                                            */
+/*  This file is part of the XRootD-based cache plug-in for CernVM-FS,        */
+/*  here after called CvmFS-Cache-Xrd .                                       */
+/*  (see https://github.com/cvmfs/xrootd-plugin.git).                         */
+/*                                                                            */
+/*  CvmFS-Cache-Xrd is free software: you can redistribute it and/or modify   */
+/*  it under the terms of the GNU Lesser General Public License as published  */
+/*  by the Free Software Foundation, either version 3 of the License, or (at  */
+/*  your option) any later version.                                           */
+/*                                                                            */
+/*  CvmFS-Cache-Xrd is distributed in the hope that it will be useful, but    */
+/*  WITHOUT ANY WARRANTY, not even the implied warranty of MERCHANTABILITY or */
+/*  FITNESS FOR A PARTICULAR PURPOSE.                                         */
+/*  See the GNU Lesser General Public License for more details.               */
+/*                                                                            */
+/*  You should have received a copy of the GNU Lesser General Public License  */
+/*  along with CvmFS-Cache-Xrd in a file called COPYING.LGPL (LGPL license)   */
+/*  and file COPYING (GPL license).                                           */
+/*  If not, see <http://www.gnu.org/licenses/>.                               */
+/*                                                                            */
+/******************************************************************************/
+
+#define CvmFSCacheXrdVERSION  "unknown"
+
+// Numeric representation of the version tag
+// Format is xyyzzr, where: x is the major version,
+// y is the minor version, zz is the bugfix revision number and
+// r is 0 for released code, 1 for unreleased code moving from the tag
+// defined by x.yy.zz .
+#define CvmFSCacheXrdVERSNUM  "xyyzzr"
+
+// The following macros extract version digits from a numeric version number
+#define CvmFSCacheXrdMajorVNUM(x) x/100000
+#define CvmFSCacheXrdMinorVNUM(x) x/1000%100
+#define CvmFSCacheXrdPatchVNUM(x) x/10%100
+#define CvmFSCacheXrdUnreleased(x) x%10
+
+#endif
