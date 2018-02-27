@@ -25,14 +25,15 @@
 #include <vector>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <dirent.h>
 
-#include "XrdPosix/XrdPosix.hh"
-#include "libcvmfs_cache.h"
+#include <XrdPosix/XrdPosix.hh>
+#include <libcvmfs_cache.h>
 #include "hash.h"
 
 using namespace std;  // NOLINT
 
-char *g_directory = "/var/lib/cvmfs/posix-upper/";
+const char *g_directory = "/var/lib/cvmfs/posix-upper/";
 
 struct Object {
   struct cvmcache_hash id;
@@ -87,9 +88,19 @@ static int null_getpath(struct cvmcache_hash *id, std::string *urlpath) {
 }
 
 static int null_create_tmp(Object& partial_object, string *tmp_path) {
-  char *char_path = tmpnam(const_cast<char*>(tmp_path->c_str()));
-  string string_path(char_path);
-  *tmp_path = string(g_directory) + char_path;
+  // Create a unique file name; we use the local system
+  size_t slen = strlen("/tmp/cvmfs_xrd_XXXXXX");
+  char *char_path = (char *)malloc(slen + 1);
+  memcpy(char_path, "/tmp/cvmfs_xrd_XXXXXX", slen);
+  char_path[slen] = 0;
+  int xfd = mkstemp(char_path);
+  if (xfd < 0)
+     return CVMCACHE_STATUS_BADCOUNT;
+  close(xfd);
+  if (unlink(char_path) < 0)
+     return CVMCACHE_STATUS_BADCOUNT;
+  // Use the file name on the remote system
+  *tmp_path = string(g_directory) + basename(char_path);
   partial_object.fd = open(tmp_path->c_str(), O_CREAT | O_EXCL);
   if (partial_object.fd <0)
     return CVMCACHE_STATUS_BADCOUNT;
