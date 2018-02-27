@@ -77,7 +77,7 @@ map<uint64_t, Listing> listings;
 
 struct cvmcache_context *ctx;
 
-static int null_getpath(struct cvmcache_hash *id, std::string *urlpath) {
+static int xrd_getpath(struct cvmcache_hash *id, std::string *urlpath) {
   shash::Digest<20, shash::kSha1> hash_calc(shash::kSha1, id->digest, shash::kSuffixNone);
   string suffix = hash_calc.MakePath();
 
@@ -87,7 +87,7 @@ static int null_getpath(struct cvmcache_hash *id, std::string *urlpath) {
   return CVMCACHE_STATUS_OK;
 }
 
-static int null_create_tmp(Object& partial_object, string *tmp_path) {
+static int xrd_create_tmp(Object& partial_object, string *tmp_path) {
   // Create a unique file name; we use the local system
   size_t slen = strlen("/tmp/cvmfs_xrd_XXXXXX");
   char *char_path = (char *)malloc(slen + 1);
@@ -111,11 +111,11 @@ static int null_create_tmp(Object& partial_object, string *tmp_path) {
   * Checks the validity of the hash and reference count associated with the
   * desired data.
   */
-static int null_chrefcnt(struct cvmcache_hash *id, int32_t change_by) {
+static int xrd_chrefcnt(struct cvmcache_hash *id, int32_t change_by) {
   ComparableHash h(*id);
 
   string urlpath;
-  null_getpath(id, &urlpath);
+  xrd_getpath(id, &urlpath);
 
   if (storage.find(h) == storage.end()) {
     Object obj;
@@ -157,7 +157,7 @@ static int null_chrefcnt(struct cvmcache_hash *id, int32_t change_by) {
   * Retrieves object information from the hash.
   * Implements the same "integrity" check as the previous function.
   */
-static int null_obj_info(
+static int xrd_obj_info(
   struct cvmcache_hash *id,
   struct cvmcache_object_info *info)
 {
@@ -181,7 +181,7 @@ static int null_obj_info(
 
 
 // Copies the contents of the cache in the buffer (?)
-static int null_pread(struct cvmcache_hash *id,
+static int xrd_pread(struct cvmcache_hash *id,
                     uint64_t offset,
                     uint32_t *size,
                     unsigned char *buffer)
@@ -210,7 +210,7 @@ static int null_pread(struct cvmcache_hash *id,
   * to be transferred to the cache. The transactions are then stored in an
   * array and identified by their id.
   */
-static int null_start_txn(
+static int xrd_start_txn(
   struct cvmcache_hash *id,
   uint64_t txn_id,
   struct cvmcache_object_info *info)
@@ -232,7 +232,7 @@ static int null_start_txn(
   //
   // partial_object.fd = mkstemp(template_path);
 
-  null_create_tmp(partial_object, &tmp_path);
+  xrd_create_tmp(partial_object, &tmp_path);
   if (partial_object.fd < 0)
     return -errno;
   txn.id = *id;
@@ -246,7 +246,7 @@ static int null_start_txn(
   * Writes the content of the oject to be acquired in the general transactions
   * array.
   */
-static int null_write_txn(
+static int xrd_write_txn(
   uint64_t txn_id,
   unsigned char *buffer,
   uint32_t size)
@@ -271,13 +271,13 @@ static int null_write_txn(
   * Tre transaction information is then erased from the general transactions
   * array and from the buffer.
   */
-static int null_commit_txn(uint64_t txn_id) {
+static int xrd_commit_txn(uint64_t txn_id) {
   int flushed;
   int update_path;
   string urlpath;
   TxnInfo txn = transactions[txn_id];
   ComparableHash h(txn.id);
-  null_getpath(&(txn.partial_object.id), &urlpath);
+  xrd_getpath(&(txn.partial_object.id), &urlpath);
   flushed = close(txn.partial_object.fd);
   if (flushed < 0)
     return -errno;
@@ -296,7 +296,7 @@ static int null_commit_txn(uint64_t txn_id) {
 /**
   * Erases transaction information without committing it to memory.
   */
-static int null_abort_txn(uint64_t txn_id) {
+static int xrd_abort_txn(uint64_t txn_id) {
   TxnInfo txn = transactions[txn_id];
   txn.partial_object.refcnt = 0;
   txn.partial_object.fd = close(txn.partial_object.fd);
@@ -310,7 +310,7 @@ static int null_abort_txn(uint64_t txn_id) {
   * Retrives informations regarding the cache, such as the number of pinned
   * bites.
   */
-static int null_info(struct cvmcache_info *info) {
+static int xrd_info(struct cvmcache_info *info) {
   info->size_bytes = uint64_t(-1);
   info->used_bytes = info->pinned_bytes = 0;
   for (map<ComparableHash, Object>::const_iterator i = storage.begin(),
@@ -326,9 +326,9 @@ static int null_info(struct cvmcache_info *info) {
 }
 
 
-static int null_shrink(uint64_t shrink_to, uint64_t *used) {
+static int xrd_shrink(uint64_t shrink_to, uint64_t *used) {
   struct cvmcache_info info;
-  null_info(&info);
+  xrd_info(&info);
   *used = info.used_bytes;
   if (*used <= shrink_to)
     return CVMCACHE_STATUS_OK;
@@ -374,7 +374,7 @@ static int null_shrink(uint64_t shrink_to, uint64_t *used) {
   return CVMCACHE_STATUS_PARTIAL;
 }
 
-static int null_listing_begin(
+static int xrd_listing_begin(
   uint64_t lst_id,
   enum cvmcache_object_type type)
 {
@@ -390,7 +390,7 @@ static int null_listing_begin(
   return CVMCACHE_STATUS_OK;
 }
 
-static int null_listing_next(
+static int xrd_listing_next(
   int64_t listing_id,
   struct cvmcache_object_info *item)
 {
@@ -417,7 +417,7 @@ static int null_listing_next(
   return CVMCACHE_STATUS_OK;
 }
 
-static int null_listing_end(int64_t listing_id) {
+static int xrd_listing_end(int64_t listing_id) {
   delete listings[listing_id].elems;
   listings.erase(listing_id);
   return CVMCACHE_STATUS_OK;
@@ -464,18 +464,18 @@ int main(int argc, char **argv) {
 
   struct cvmcache_callbacks callbacks;
   memset(&callbacks, 0, sizeof(callbacks));
-  callbacks.cvmcache_chrefcnt = null_chrefcnt;
-  callbacks.cvmcache_obj_info = null_obj_info;
-  callbacks.cvmcache_pread = null_pread;
-  callbacks.cvmcache_start_txn = null_start_txn;
-  callbacks.cvmcache_write_txn = null_write_txn;
-  callbacks.cvmcache_commit_txn = null_commit_txn;
-  callbacks.cvmcache_abort_txn = null_abort_txn;
-  callbacks.cvmcache_info = null_info;
-  callbacks.cvmcache_shrink = null_shrink;
-  callbacks.cvmcache_listing_begin = null_listing_begin;
-  callbacks.cvmcache_listing_next = null_listing_next;
-  callbacks.cvmcache_listing_end = null_listing_end;
+  callbacks.cvmcache_chrefcnt = xrd_chrefcnt;
+  callbacks.cvmcache_obj_info = xrd_obj_info;
+  callbacks.cvmcache_pread = xrd_pread;
+  callbacks.cvmcache_start_txn = xrd_start_txn;
+  callbacks.cvmcache_write_txn = xrd_write_txn;
+  callbacks.cvmcache_commit_txn = xrd_commit_txn;
+  callbacks.cvmcache_abort_txn = xrd_abort_txn;
+  callbacks.cvmcache_info = xrd_info;
+  callbacks.cvmcache_shrink = xrd_shrink;
+  callbacks.cvmcache_listing_begin = xrd_listing_begin;
+  callbacks.cvmcache_listing_next = xrd_listing_next;
+  callbacks.cvmcache_listing_end = xrd_listing_end;
   callbacks.capabilities = CVMCACHE_CAP_ALL_V1;
 
 
