@@ -8,7 +8,7 @@
 #
 # XROOTD_DIR may be defined as a hint for where to look
 
-FIND_PATH(XROOTD_INCLUDE_DIR XrdVersion.hh
+FIND_PATH(XROOTD_INCLUDE_DIR XrdPosix/XrdPosix.hh
   HINTS
   $PWD/xrootd/src/include/
   ${XROOTD_DIR}
@@ -19,6 +19,7 @@ FIND_PATH(XROOTD_INCLUDE_DIR XrdVersion.hh
   PATHS /opt/xrootd
 )
 if (XROOTD_INCLUDE_DIR)
+   message(STATUS "             XROOTD_INCLUDE_DIR:" ${XROOTD_INCLUDE_DIR})
    SET(XROOTD_FOUND TRUE)
 endif()
 
